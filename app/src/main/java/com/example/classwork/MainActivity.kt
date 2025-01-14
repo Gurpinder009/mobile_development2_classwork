@@ -1,6 +1,9 @@
 package com.example.classwork
 
 import android.os.Bundle
+import android.view.View
+import android.widget.EditText
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -17,4 +20,28 @@ class MainActivity : AppCompatActivity() {
             insets
         }
     }
+
+
+
+
+
+
+    fun convertCurrency(view: View){
+        val dollarInput = findViewById<EditText>(R.id.dollar_input)
+        val outputText = findViewById<TextView>(R.id.output_txt)
+
+        if(dollarInput.text.isNotEmpty()){
+            val dollarValue:Float = dollarInput.text.toString().toFloat();
+            outputText.text = (dollarValue * 0.85f).toString();
+        }else{
+            outputText.text = getString(R.string.no_value_msg)
+        }
+
+
+
+
+    }
+
+
+
 }
