@@ -89,7 +89,7 @@ class MainActivity : AppCompatActivity(), TextView.OnEditorActionListener {
 
 
     // for calculating tip and total values
-    fun calTipAndTotal(){
+    private fun calTipAndTotal(){
         var billAmount= 0.0;
 
         // for checking whether given value is valid or not
