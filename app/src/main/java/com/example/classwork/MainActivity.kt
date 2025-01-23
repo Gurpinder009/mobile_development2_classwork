@@ -3,6 +3,7 @@ package com.example.classwork
 import android.annotation.SuppressLint
 import android.icu.util.CurrencyAmount
 import android.os.Bundle
+import android.os.PersistableBundle
 import android.text.Editable
 import android.view.KeyEvent
 import android.view.View
@@ -13,6 +14,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import org.jetbrains.annotations.NotNull
 import java.text.NumberFormat
 
 class MainActivity : AppCompatActivity(), TextView.OnEditorActionListener {
@@ -54,6 +56,18 @@ class MainActivity : AppCompatActivity(), TextView.OnEditorActionListener {
     }
 
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("tipPercentage", tipPercentage.text.toString() )
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        tipPercentage.text = savedInstanceState.getString("tipPercentage",tipPercentage.text.toString())
+        calTipAndTotal()
+    }
+
+
     //to handle increase percentage button
     @SuppressLint("SetTextI18n")
     fun increasePercentage(view:View){
@@ -76,7 +90,6 @@ class MainActivity : AppCompatActivity(), TextView.OnEditorActionListener {
 
     // for calculating tip and total values
     fun calTipAndTotal(){
-
         var billAmount= 0.0;
 
         // for checking whether given value is valid or not
