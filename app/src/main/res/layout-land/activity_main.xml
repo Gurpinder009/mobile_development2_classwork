@@ -12,117 +12,114 @@
     <TextView
         android:id="@+id/tip_percentage_value"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="35dp"
-        android:layout_marginBottom="7dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="37dp"
         android:text="@string/initial_tip_percentage_str"
         android:textSize="@dimen/text_size"
-        app:layout_constraintBottom_toBottomOf="@+id/percent_down_btn"
-        app:layout_constraintEnd_toStartOf="@+id/percent_down_btn"
-        app:layout_constraintStart_toEndOf="@+id/textView2" />
+        app:layout_constraintStart_toEndOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/bill_amount_value" />
 
     <TextView
         android:id="@+id/textView6"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="91dp"
+        android:layout_marginTop="38dp"
         android:text="@string/total_str"
         android:textSize="@dimen/text_size"
-        app:layout_constraintBaseline_toBaselineOf="@+id/cal_total_value"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="67dp"
-        android:layout_marginEnd="21dp"
+        android:layout_marginStart="91dp"
+        android:layout_marginTop="28dp"
         android:text="@string/bill_amount_str"
         android:textSize="@dimen/text_size"
-        app:layout_constraintEnd_toStartOf="@+id/bill_amount_value"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/percent_down_btn"
-        android:layout_width="0dp"
-        android:layout_height="@dimen/btn_height_width"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="13dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="32dp"
         android:padding="@dimen/padding"
         android:text="@string/decrease_btn"
         app:cornerRadius="5dp"
-        app:layout_constraintEnd_toStartOf="@+id/percent_up_btn"
-        app:layout_constraintStart_toEndOf="@+id/tip_percentage_value"
+        app:layout_constraintStart_toEndOf="@+id/percent_up_btn"
         app:layout_constraintTop_toBottomOf="@+id/bill_amount_value" />
 
     <Button
         android:id="@+id/percent_up_btn"
-        android:layout_width="0dp"
+        android:layout_width="@dimen/btn_height_width"
         android:layout_height="@dimen/btn_height_width"
-        android:layout_marginEnd="48dp"
+        android:layout_marginStart="66dp"
+        android:layout_marginTop="32dp"
         android:padding="@dimen/padding"
         android:text="@string/add_btn"
         app:cornerRadius="5dp"
-        app:layout_constraintBaseline_toBaselineOf="@+id/percent_down_btn"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/percent_down_btn" />
+        app:layout_constraintStart_toEndOf="@+id/tip_percentage_value"
+        app:layout_constraintTop_toBottomOf="@+id/bill_amount_value" />
 
     <EditText
         android:id="@+id/bill_amount_value"
-        android:layout_width="wrap_content"
+        android:layout_width="400dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60dp"
+
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="16dp"
         android:autofillHints="true"
         android:ems="10"
-
         android:hint="@string/initial_bill_amount"
         android:inputType="numberDecimal"
         android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="67dp"
-        android:layout_marginEnd="40dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="91dp"
+        android:layout_marginTop="53dp"
         android:text="@string/tip_percentage_str"
         android:textSize="@dimen/text_size"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tip_percentage_value"
-        app:layout_constraintEnd_toStartOf="@+id/tip_percentage_value"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="17dp"
+        android:layout_marginStart="91dp"
+        android:layout_marginTop="38dp"
         android:text="@string/tip_str"
         android:textSize="@dimen/text_size"
-        app:layout_constraintBaseline_toBaselineOf="@+id/cal_tip_value"
-        app:layout_constraintStart_toStartOf="@+id/textView6" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
     <TextView
         android:id="@+id/cal_tip_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="39dp"
-        android:layout_marginTop="62dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="36dp"
         android:text="@string/initial_tip_value_str"
         android:textSize="@dimen/text_size"
         app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toBottomOf="@+id/percent_down_btn" />
+        app:layout_constraintTop_toBottomOf="@+id/tip_percentage_value" />
 
     <TextView
         android:id="@+id/cal_total_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginStart="88dp"
+        android:layout_marginTop="36dp"
         android:text="@string/initial_total_value_str"
         android:textSize="@dimen/text_size"
         app:layout_constraintStart_toEndOf="@+id/textView6"

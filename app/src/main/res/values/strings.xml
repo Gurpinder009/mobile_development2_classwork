@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">classwork</string>
+    <string name="bill_amount_str">Bill Amount</string>
+    <string name="tip_percentage_str">Percent</string>
+    <string name="initial_tip_percentage_str">15%</string>
+    <string name="tip_str">Tip</string>
+    <string name="initial_tip_value_str">$0.00</string>
+    <string name="total_str">Total</string>
+    <string name="initial_total_value_str">$0.00</string>
+    <string name="add_btn">+</string>
+    <string name="decrease_btn">-</string>
+    <string name="initial_bill_amount">$0.00</string>
 </resources>
