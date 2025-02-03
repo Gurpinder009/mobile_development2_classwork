@@ -4,8 +4,11 @@ plugins {
 }
 
 android {
+    buildFeatures{
+        viewBinding=true
+    }
     namespace = "com.example.classwork"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.classwork"
