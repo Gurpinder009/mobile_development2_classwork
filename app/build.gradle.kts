@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.classwork"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.classwork"
@@ -36,7 +36,8 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.picasso)
+    implementation(libs.volley)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

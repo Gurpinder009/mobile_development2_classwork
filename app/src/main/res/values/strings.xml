@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">classwork</string>
+    <string name="overview">overview</string>
+    <string name="rating">rating</string>
+    <string name="title">title</string>
+    <string name="image">image\n\n</string>
 </resources>
