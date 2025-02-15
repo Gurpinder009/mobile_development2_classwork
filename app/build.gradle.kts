@@ -1,11 +1,20 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("androidx.navigation.safeargs")
+
+
 }
 
 android {
     namespace = "com.example.classwork"
-    compileSdk = 34
+    compileSdk = 35
+
+
+    buildFeatures {
+        viewBinding = true
+    }
+
 
     defaultConfig {
         applicationId = "com.example.classwork"
@@ -36,7 +45,8 @@ android {
 }
 
 dependencies {
-
+    implementation(libs.androidx.navigation.ui)
+    implementation(libs.androidx.navigation.fragment)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
