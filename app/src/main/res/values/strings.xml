@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">AndroidFinalProject</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="editTextEmailHelper">example@gmail.com</string>
+    <string name="emailInputHelperText">example@abc.com</string>
+    <string name="passwordInputHelperText">password</string>
+    <string name="loginPageTitleText">Login</string>
+    <string name="loginPageSignUpPageText">new user? register</string>
+    <string name="loginPageBtnText">login</string>
+    <string name="signUpPageTitleText">Sign up</string>
+    <string name="signUpToLoginText">already a user? login</string>
+    <string name="firstNameInputHelperText">first name</string>
+    <string name="lastNameInputHelperText">last name</string>
+    <string name="signUpPageBtnText">Sign Up</string>
+</resources>
