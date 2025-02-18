@@ -69,12 +69,18 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
+
             <TextView
                 android:id="@+id/loginPageToSignUpTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="@string/loginPageSignUpPageText" />
+                android:clickable="true"
+                android:focusable="true"
+                android:minHeight="48dp"
+                android:text="@string/loginPageSignUpPageText"
+                android:textAlignment="center" />
+
+
 
 
         </LinearLayout>

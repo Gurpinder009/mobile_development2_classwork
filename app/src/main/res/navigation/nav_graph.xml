@@ -8,28 +8,4 @@
         android:name="mobile.dev.androidfinalproject.fragments.DashboardFragment"
         android:label="fragment_dashboard"
         tools:layout="@layout/fragment_dashboard" />
-    <fragment
-        android:id="@+id/loginInFragment"
-        android:name="mobile.dev.androidfinalproject.fragments.userFragments.LoginInFragment"
-        android:label="fragment_login_in"
-        tools:layout="@layout/fragment_login_in" >
-        <action
-            android:id="@+id/action_loginInFragment_to_dashboardFragment"
-            app:destination="@id/dashboardFragment" />
-        <action
-            android:id="@+id/action_loginInFragment_to_signUpFragment"
-            app:destination="@id/signUpFragment" />
-    </fragment>
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="mobile.dev.androidfinalproject.fragments.userFragments.SignUpFragment"
-        android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
-        <action
-            android:id="@+id/action_signUpFragment_to_dashboardFragment"
-            app:destination="@id/dashboardFragment" />
-        <action
-            android:id="@+id/action_signUpFragment_to_loginInFragment"
-            app:destination="@id/loginInFragment" />
-    </fragment>
 </navigation>
