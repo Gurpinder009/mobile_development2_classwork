@@ -2,20 +2,7 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    app:startDestination="@id/signUpFragment">
-
-    <fragment
-        android:id="@+id/signUpFragment"
-        android:name="mobile.dev.androidfinalproject.fragments.userFragments.SignUpFragment"
-        android:label="fragment_sign_up"
-        tools:layout="@layout/fragment_sign_up" >
-        <action
-            android:id="@+id/action_signUpFragment_to_dashboardFragment"
-            app:destination="@id/dashboardFragment" />
-        <action
-            android:id="@+id/action_signUpFragment_to_loginInFragment"
-            app:destination="@id/loginInFragment" />
-    </fragment>
+    app:startDestination="@id/dashboardFragment">
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="mobile.dev.androidfinalproject.fragments.DashboardFragment"
@@ -32,5 +19,17 @@
         <action
             android:id="@+id/action_loginInFragment_to_signUpFragment"
             app:destination="@id/signUpFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/signUpFragment"
+        android:name="mobile.dev.androidfinalproject.fragments.userFragments.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_signUpFragment_to_loginInFragment"
+            app:destination="@id/loginInFragment" />
     </fragment>
 </navigation>
