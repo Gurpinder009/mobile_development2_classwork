@@ -7,6 +7,8 @@ import com.google.firebase.Firebase
 
 
 class SingletonFirebaseAuth private constructor(){
+
+
     companion object{
         @Volatile private var instance:SingletonFirebaseAuth?= null;
 
@@ -16,12 +18,8 @@ class SingletonFirebaseAuth private constructor(){
                 instance?: SingletonFirebaseAuth().also { instance = it}
             }
 
-
-        fun getFirebaseAuth(): FirebaseAuth {
-            return Firebase.auth
-        }
-
-
-
+    }
+    fun getFirebaseAuth(): FirebaseAuth {
+        return Firebase.auth
     }
 }
