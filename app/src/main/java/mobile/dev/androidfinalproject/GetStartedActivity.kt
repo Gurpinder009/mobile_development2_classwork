@@ -20,7 +20,7 @@ class GetStartedActivity : AppCompatActivity() {
         _binding = ActivityGetStartedBinding.inflate(layoutInflater)
         setContentView(_binding.root)
 
-        if(SingletonFirebaseAuth.getInstance().getFirebaseAuth().currentUser != null){
+        if(SingletonFirebaseAuth.getInstance().isLoggedIn()){
             val intent = Intent(this,MainActivity::class.java)
             startActivity(intent)
             finish()

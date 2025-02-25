@@ -10,10 +10,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.firestore.auth.User
 import mobile.dev.androidfinalproject.MainActivity
 import mobile.dev.androidfinalproject.R
 import mobile.dev.androidfinalproject.databinding.FragmentLoginInBinding
 import mobile.dev.androidfinalproject.databinding.FragmentSignUpBinding
+import mobile.dev.androidfinalproject.dbHelpers.UserDbHelper
+import mobile.dev.androidfinalproject.models.UserModel
 import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
 
 
@@ -47,10 +50,19 @@ class SignUpFragment (
         auth.createUserWithEmailAndPassword(email,password)
             .addOnSuccessListener {
                 _ ->run{
-                    Toast.makeText(context, "Successfully Logged In", Toast.LENGTH_SHORT).show()
-                    val intent = Intent(context, MainActivity::class.java)
-                    startActivity(intent)
-                    activity?.finish()
+                    val user = UserModel(email,password)
+                    UserDbHelper.postUser(user, successListener={
+                        ref->run{
+                        Toast.makeText(context, "Successfully Logged In", Toast.LENGTH_SHORT).show()
+                        val intent = Intent(context, MainActivity::class.java)
+                        startActivity(intent)
+                        activity?.finish()
+                        }
+                    } , failureListener = {
+
+                    })
+
+
 
                 }
             }

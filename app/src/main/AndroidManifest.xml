@@ -29,9 +29,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-             >
-
-        </activity>
+            android:theme="@style/Base.Theme.AndroidFinalProjectSecond"
+             />
     </application>
 
 </manifest>

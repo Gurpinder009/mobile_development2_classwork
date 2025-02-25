@@ -3,18 +3,22 @@ package mobile.dev.androidfinalproject.models
 import java.time.LocalDateTime
 
 data class UserModel (
-    val firstName:String,
-    val id:Int,
-    val lastName:String,
+    val firstName:String?,
+    val id:Int?,
+    val lastName:String?,
     val emailAddress:String,
     val password:String,
-    val height:Double,
-    val weight:Double,
-    val createdAt:LocalDateTime,
-    val updatedAt:LocalDateTime,
-    val targetCalories:Double,
-    val targetSleepHours:Double
+    val height:Double?,
+    val weight:Double?,
+    val createdAt:LocalDateTime?,
+    val updatedAt:LocalDateTime?,
+    val targetCalories:Double?,
+    val targetSleepHours:Double?
 ) {
+
+
+
+    public constructor(email:String, password: String):this(null,null,null,emailAddress = email, password = password,null,null,null,null,null,null)
 
 
     override fun equals(other: Any?): Boolean {
@@ -40,7 +44,7 @@ data class UserModel (
 
     override fun hashCode(): Int {
         var result = id
-        result = 31 * result + firstName.hashCode()
+        result = 31 * result!! + firstName.hashCode()
         result = 31 * result + lastName.hashCode()
         result = 31 * result + emailAddress.hashCode()
         result = 31 * result + password.hashCode()

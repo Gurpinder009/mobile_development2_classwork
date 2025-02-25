@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Base.Theme.AndroidFinalProject" parent="Theme.Material3.DayNight.NoActionBar">
+    <style name="Base.Theme.AndroidFinalProjectSecond" parent="Theme.Material3.DayNight">
          <item name="colorPrimary">@color/primary</item>
     </style>
 
-    <style name="Theme.AndroidFinalProject" parent="Base.Theme.AndroidFinalProject" />
+    <style name="Theme.AndroidFinalProject" parent="Base.Theme.AndroidFinalProjectSecond" />
 </resources>

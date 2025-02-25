@@ -27,7 +27,7 @@ class DashboardFragment (
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        _binding?.signout?.setOnClickListener{
+        _binding?.signOut?.setOnClickListener{
             _-> run{
                 SingletonFirebaseAuth.getInstance().getFirebaseAuth().signOut()
                 val intent = Intent(context, GetStartedActivity::class.java)
