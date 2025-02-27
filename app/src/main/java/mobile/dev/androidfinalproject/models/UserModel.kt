@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 
 data class UserModel (
     val firstName:String?,
+
     val id:Int?,
     val lastName:String?,
     val emailAddress:String,
