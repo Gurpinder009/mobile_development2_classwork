@@ -18,6 +18,11 @@ data class UserModel (
 ) {
 
 
+    public constructor(firstName: String?,lastName: String?,email: String,password: String) : this(firstName,null,lastName,emailAddress = email, password = password,null,null,null,null,null,null) {
+
+    }
+
+
 
     public constructor(email:String, password: String):this(null,null,null,emailAddress = email, password = password,null,null,null,null,null,null)
 

@@ -10,7 +10,7 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:padding="10dp"
+        android:padding="16dp"
         android:layout_height="match_parent">
 
 
@@ -92,7 +92,7 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="16dp" />
+            android:layout_height="26dp" />
 
         <TextView
             android:text="your activities"
@@ -103,40 +103,152 @@
 
         <Space
             android:layout_width="match_parent"
-            android:layout_height="16dp" />
+            android:layout_height="26dp" />
       <GridLayout
           android:columnCount="2"
-
           android:layout_width="match_parent"
           android:layout_height="wrap_content">
 
-         <androidx.cardview.widget.CardView
-             android:layout_columnWeight="1"
-             android:layout_height="150dp"
-             android:layout_margin="5dp"
-             app:cardElevation="2dp"
-             android:layout_width="0dp"
 
-
-             >
-             <TextView
-                 android:layout_width="wrap_content"
-                 android:layout_height="wrap_content"
-                 android:text="calories"/>
-         </androidx.cardview.widget.CardView>
           <androidx.cardview.widget.CardView
               android:layout_columnWeight="1"
+              android:layout_height="150dp"
               android:layout_margin="5dp"
+              app:cardElevation="2dp"
+              app:contentPadding="10dp"
+
               android:layout_width="0dp"
 
-              app:cardElevation="5dp"
-              android:layout_height="150dp"
 
               >
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="Sleep"/>
+              <LinearLayout
+                  android:orientation="vertical"
+                  android:gravity="center_vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+                  <TextView
+                      android:textSize="22dp"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Calories"/>
+
+                  <TextView
+                      android:textSize="24dp"
+
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="57%"/>
+
+
+                  <LinearLayout
+                      android:orientation="horizontal"
+                      android:gravity="end"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content">
+
+
+
+                      <TextView
+                          android:textSize="16dp"
+                          android:layout_weight="1"
+
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="57%"/>
+                      <Button
+                          android:text="-"
+                          android:layout_width="48dp"
+                          android:layout_height="48dp"
+                          android:padding="0dp"
+                          android:layout_marginEnd="2dp"
+
+                          android:background="@drawable/small_button_design"
+                          />
+                      <Button
+                          android:text="+"
+                          android:layout_width="48dp"
+                          android:layout_height="48dp"
+                          android:padding="0dp"
+                          android:background="@drawable/small_button_design"
+                          />
+                  </LinearLayout>
+
+
+
+              </LinearLayout>
+          </androidx.cardview.widget.CardView>
+
+
+
+
+
+          <androidx.cardview.widget.CardView
+              android:layout_columnWeight="1"
+              android:layout_height="150dp"
+              android:layout_margin="5dp"
+              app:cardElevation="2dp"
+              app:contentPadding="10dp"
+
+              android:layout_width="0dp"
+
+
+              >
+              <LinearLayout
+                  android:orientation="vertical"
+                  android:gravity="center_vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+                  <TextView
+                      android:textSize="22dp"
+
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Sleep"/>
+
+                  <TextView
+                      android:textSize="24dp"
+
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="57%"/>
+
+
+                  <LinearLayout
+                      android:orientation="horizontal"
+                      android:gravity="end"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content">
+
+
+
+                      <TextView
+                          android:textSize="16dp"
+                          android:layout_weight="1"
+
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="57%"/>
+                      <Button
+                          android:text="-"
+                          android:layout_width="48dp"
+                          android:layout_height="48dp"
+                          android:padding="0dp"
+                          android:layout_marginEnd="2dp"
+
+                          android:background="@drawable/small_button_design"
+                          />
+                      <Button
+                          android:text="+"
+                          android:layout_width="48dp"
+                          android:layout_height="48dp"
+                          android:padding="0dp"
+                          android:background="@drawable/small_button_design"
+                          />
+                  </LinearLayout>
+
+
+
+              </LinearLayout>
           </androidx.cardview.widget.CardView>
 
 
@@ -144,34 +256,149 @@
 
           <androidx.cardview.widget.CardView
               android:layout_columnWeight="1"
+              android:layout_height="150dp"
               android:layout_margin="5dp"
+              app:cardElevation="2dp"
+              app:contentPadding="10dp"
+
               android:layout_width="0dp"
 
-              app:cardElevation="5dp"
-              android:layout_height="150dp"
 
               >
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="water"/>
+              <LinearLayout
+                  android:orientation="vertical"
+                  android:gravity="center_vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+                  <TextView
+                      android:textSize="22dp"
+
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Water"/>
+
+                  <TextView
+                      android:textSize="24dp"
+
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="57%"/>
+
+
+                  <LinearLayout
+                      android:orientation="horizontal"
+                      android:gravity="end"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content">
+
+
+
+                      <TextView
+                          android:textSize="16dp"
+                          android:layout_weight="1"
+
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="57%"/>
+                      <Button
+                          android:text="-"
+                          android:layout_width="48dp"
+                          android:layout_height="48dp"
+                          android:padding="0dp"
+                          android:layout_marginEnd="2dp"
+
+                          android:background="@drawable/small_button_design"
+                          />
+                      <Button
+                          android:text="+"
+                          android:layout_width="48dp"
+                          android:layout_height="48dp"
+                          android:padding="0dp"
+                          android:background="@drawable/small_button_design"
+                          />
+                  </LinearLayout>
+
+
+
+              </LinearLayout>
           </androidx.cardview.widget.CardView>
+
 
 
 
           <androidx.cardview.widget.CardView
               android:layout_columnWeight="1"
-              android:layout_margin="5dp"
-              app:cardElevation="5dp"
-              android:layout_width="0dp"
               android:layout_height="150dp"
+              android:layout_margin="5dp"
+              app:cardElevation="2dp"
+              app:contentPadding="10dp"
+
+              android:layout_width="0dp"
+
 
               >
-              <TextView
-                  android:layout_width="wrap_content"
-                  android:layout_height="wrap_content"
-                  android:text="excercise time"/>
+              <LinearLayout
+                  android:orientation="vertical"
+                  android:gravity="center_vertical"
+                  android:layout_width="match_parent"
+                  android:layout_height="match_parent">
+                  <TextView
+                      android:textSize="22dp"
+
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="Exercise Time"/>
+
+                  <TextView
+                      android:textSize="24dp"
+
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:text="57%"/>
+
+
+                  <LinearLayout
+                      android:orientation="horizontal"
+                      android:gravity="end"
+                      android:layout_width="match_parent"
+                      android:layout_height="wrap_content">
+
+
+
+                      <TextView
+                          android:textSize="16dp"
+                          android:layout_weight="1"
+
+                          android:layout_width="wrap_content"
+                          android:layout_height="wrap_content"
+                          android:text="57%"/>
+                      <Button
+                          android:text="-"
+                          android:layout_width="48dp"
+                          android:layout_height="48dp"
+                          android:padding="0dp"
+                          android:layout_marginEnd="2dp"
+
+                          android:background="@drawable/small_button_design"
+                          />
+                      <Button
+                          android:text="+"
+                          android:layout_width="48dp"
+                          android:layout_height="48dp"
+                          android:padding="0dp"
+                          android:background="@drawable/small_button_design"
+                          />
+                  </LinearLayout>
+
+
+
+              </LinearLayout>
           </androidx.cardview.widget.CardView>
+
+
+
+
+
 
       </GridLayout>
 

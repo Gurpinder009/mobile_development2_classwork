@@ -47,18 +47,17 @@ class LoginInFragment
         val email = _binding?.emailAddressEditText?.text.toString()
         val password = _binding?.passwordEditText?.text.toString();
 
-        if(email.isNotEmpty() and  password.isNotEmpty()){
+        if(email.isNotEmpty() && password.isNotEmpty()){
             auth.signInWithEmailAndPassword(email,password)
             .addOnSuccessListener{_->run{
                 Toast.makeText(context,"Successfully logged in",Toast.LENGTH_SHORT).show()
                 val intent = Intent(context, MainActivity::class.java)
                 startActivity(intent)
                 activity?.finish()
-
             }}
             .addOnFailureListener{result->run{
                 Log.i("log1", "handleLogin: "+ result.message)
-                Toast.makeText(context,"Something gone wrong",Toast.LENGTH_SHORT).show()
+                Toast.makeText(context,result.message,Toast.LENGTH_SHORT).show()
 
             }}
         }else{

@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.gms.google-services")
+    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
 }
 
 android {
@@ -41,6 +42,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.play.services.maps)
     implementation(platform(libs.firebase.bom))
     implementation(libs.com.google.firebase.firebase.analytics)
     implementation(libs.com.google.firebase.firebase.auth)

@@ -33,7 +33,6 @@ class DashboardFragment (
                 val intent = Intent(context, GetStartedActivity::class.java)
                 startActivity(intent)
                 activity?.finish()
-
             }
         }
 

@@ -2,6 +2,7 @@ package mobile.dev.androidfinalproject.fragments.userFragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Email
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -39,6 +40,31 @@ class SignUpFragment (
         _binding?.signupToLoginTextView?.setOnClickListener(this::handleSignUpToLogin)
     }
 
+
+    private fun validateData(firstName:String, lastName:String, email: String, password:String, confirmPassword:String):String{
+        var message=""
+        if(firstName.isEmpty()) {
+            message = "First name can't be empty"
+        }else if(lastName.isEmpty()){
+            message = "Last name can't be empty"
+        }else if(email.isEmpty()){
+            message = "Email address can't be empty"
+        }else if(password.isEmpty()){
+            message = "Password can't be empty"
+        }else if(password != confirmPassword){
+            message = "Password must match"
+        }
+        return message;
+    }
+
+
+
+
+
+
+
+
+
     fun handleSignUp(view:View){
         val auth = SingletonFirebaseAuth.getInstance().getFirebaseAuth();
         val email = _binding?.emailAddressEditText?.text.toString()
@@ -46,33 +72,54 @@ class SignUpFragment (
         val firstName = _binding?.firstNameEditText?.text.toString()
         val lastName = _binding?.lastNameEditText?.text.toString()
         val confirmPassword = _binding?.confirmPasswordEditText?.text.toString()
-
-        auth.createUserWithEmailAndPassword(email,password)
-            .addOnSuccessListener {
-                _ ->run{
-                    val user = UserModel(email,password)
-                    UserDbHelper.postUser(user, successListener={
-                        ref->run{
-                        Toast.makeText(context, "Successfully Logged In", Toast.LENGTH_SHORT).show()
-                        val intent = Intent(context, MainActivity::class.java)
-                        startActivity(intent)
-                        activity?.finish()
-                        }
-                    } , failureListener = {
-
-                    })
+        val message = validateData(firstName,lastName,email,password,confirmPassword);
 
 
 
+        if(message !=""){
+            Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
+        } else{
+            auth.createUserWithEmailAndPassword(email, password)
+                .addOnSuccessListener { _ ->
+                    run {
+                        val user = UserModel(firstName,lastName,email, password)
+                        UserDbHelper.postUser(user, successListener = { ref ->
+                            run {
+                                Toast.makeText(
+                                    context,
+                                    "Successfully Logged In",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                val intent = Intent(context, MainActivity::class.java)
+                                startActivity(intent)
+                                activity?.finish()
+                            }
+                        }, failureListener = { error ->
+                            run {
+                                Log.i("log1", "handleSignUp: $error" )
+
+                                Toast.makeText(
+                                    context,
+                                    "message $error",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
+                        })
+
+
+                    }
                 }
-            }
-            .addOnFailureListener{
-                error -> run{
-                Log.i("log1", "handleSignUp: "+ error.message)
+                .addOnFailureListener { error ->
+                    run {
+                        Log.i("log1", "handleSignUp: " + error.message)
 
-                Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, error.message.toString(), Toast.LENGTH_SHORT).show()
+                    }
                 }
-            }
+
+
+        }
 
 
 
