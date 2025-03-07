@@ -1,7 +1,7 @@
 # Get Healthy App
 This application is compilable or runnable but it is not complete. There are many features that are required implementation and some of them requires refinement and i am working on it.
 
-## list of features implemented so far
+## List of features implemented so far
  - map locator (require permission handler)
  - authentication (require better error message)
  - Dashboard (requires cloud data and little more styling)
