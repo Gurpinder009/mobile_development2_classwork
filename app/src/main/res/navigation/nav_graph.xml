@@ -8,4 +8,9 @@
         android:name="mobile.dev.androidfinalproject.fragments.DashboardFragment"
         android:label="fragment_dashboard"
         tools:layout="@layout/fragment_dashboard" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="mobile.dev.androidfinalproject.fragments.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 </navigation>

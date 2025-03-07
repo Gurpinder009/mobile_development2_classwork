@@ -1,17 +1,13 @@
 package mobile.dev.androidfinalproject
 
-import android.R
 import android.os.Bundle
-import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import androidx.navigation.NavController
-import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.setupWithNavController
 import mobile.dev.androidfinalproject.databinding.ActivityMainBinding
-import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var _binding:ActivityMainBinding
@@ -21,14 +17,14 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(_binding.root)
 
-//        val toolbar: androidx.appcompat.widget.Toolbar = _binding.customToolbar
-//        setSupportActionBar(toolbar)
-//        val toolbarTitle = _binding.toolbarTitle
-//        toolbarTitle.text = "My Custom App"
-//
 
 
 
+        val navHostFragment = supportFragmentManager.findFragmentById(_binding.fragmentContainerView2.id) as NavHostFragment
+        val navController = navHostFragment.navController
+
+
+        _binding.bottomNavBar.setupWithNavController(navController)
 
         ViewCompat.setOnApplyWindowInsetsListener(_binding.main) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())

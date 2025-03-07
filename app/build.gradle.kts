@@ -2,7 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     id("com.google.gms.google-services")
-    alias(libs.plugins.google.android.libraries.mapsplatform.secrets.gradle.plugin)
+    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
 }
 
 android {
@@ -42,6 +42,9 @@ android {
 }
 
 dependencies {
+    implementation(libs.volley)
+//    implementation(libs.places)
+//    implementation(libs.geojson)
     implementation(libs.play.services.maps)
     implementation(platform(libs.firebase.bom))
     implementation(libs.com.google.firebase.firebase.analytics)
@@ -56,6 +59,7 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
