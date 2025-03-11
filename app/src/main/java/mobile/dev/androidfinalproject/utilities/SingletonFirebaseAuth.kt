@@ -4,10 +4,12 @@ package mobile.dev.androidfinalproject.utilities
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.auth
 import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseUser
 
 
 class SingletonFirebaseAuth private constructor(
     private val auth:FirebaseAuth = Firebase.auth
+
 ){
 
     companion object{
@@ -20,6 +22,10 @@ class SingletonFirebaseAuth private constructor(
             }
 
     }
+    fun getCurrentUser():FirebaseUser{
+        return auth.currentUser!!
+    }
+
     fun getFirebaseAuth(): FirebaseAuth {
         return auth
     }

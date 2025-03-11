@@ -17,4 +17,8 @@ class SingletonFirebaseDb private constructor(){
     fun getFirestoreDb():FirebaseFirestore{
         return Firebase.firestore
     }
+
+
+
+
 }

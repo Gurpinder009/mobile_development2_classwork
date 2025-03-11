@@ -11,7 +11,7 @@ class HealthLogsDbHelper {
         private const val COLLECTION_NAME= "health_logs";
 
         // for getting entire collection
-        fun  getHealthLog(successListener:(result: QuerySnapshot)->Unit, failureListener:(exception:Exception)->Unit){
+        fun  getHealthLogs(successListener:(result: QuerySnapshot)->Unit, failureListener:(exception:Exception)->Unit){
             val db = SingletonFirebaseDb.getInstance().getFirestoreDb()
             db.collection(COLLECTION_NAME).get()
                 .addOnSuccessListener(successListener)
