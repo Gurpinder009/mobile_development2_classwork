@@ -90,9 +90,12 @@ class SignUpFragment (
                                     "Successfully Logged In",
                                     Toast.LENGTH_SHORT
                                 ).show()
-                                val intent = Intent(context, MainActivity::class.java)
-                                startActivity(intent)
-                                activity?.finish()
+
+
+                                Navigation.findNavController(view).navigate(R.id.action_signUpFragment2_to_getDetailsFragment)
+
+
+
                             }
                         }, failureListener = { error ->
                             run {

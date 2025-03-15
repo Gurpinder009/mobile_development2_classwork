@@ -1,6 +1,7 @@
 package mobile.dev.androidfinalproject
 
 import android.os.Bundle
+import android.view.Menu
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -19,6 +20,12 @@ class MainActivity : AppCompatActivity() {
 
 
 
+        val toolbar: androidx.appcompat.widget.Toolbar = _binding.toolbar
+        setSupportActionBar(toolbar)
+        window.statusBarColor = resources.getColor(R.color.primary_darker)
+
+
+
 
         val navHostFragment = supportFragmentManager.findFragmentById(_binding.fragmentContainerView2.id) as NavHostFragment
         val navController = navHostFragment.navController
@@ -31,6 +38,11 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
     }
 
 

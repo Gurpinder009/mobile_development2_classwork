@@ -22,6 +22,9 @@
         <action
             android:id="@+id/action_signUpFragment2_to_loginInFragment2"
             app:destination="@id/loginInFragment2" />
+        <action
+            android:id="@+id/action_signUpFragment2_to_getDetailsFragment"
+            app:destination="@id/getDetailsFragment" />
     </fragment>
     <fragment
         android:id="@+id/getStartedFragment"
@@ -35,4 +38,9 @@
             android:id="@+id/action_getStartedFragment_to_loginInFragment2"
             app:destination="@id/loginInFragment2" />
     </fragment>
+    <fragment
+        android:id="@+id/getDetailsFragment"
+        android:name="mobile.dev.androidfinalproject.GetDetailsFragment"
+        android:label="fragment_get_details"
+        tools:layout="@layout/fragment_get_details" />
 </navigation>

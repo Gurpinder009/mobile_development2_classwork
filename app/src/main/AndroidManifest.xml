@@ -20,15 +20,14 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="${MAPS_API_KEY}" />
-<!--        <meta-data-->
-<!--            android:name="yelp_api_key"-->
-<!--            android:value="${YELP_API_KEY}" />-->
+
 
         <activity
             android:name=".GetStartedActivity"
             android:exported="true"
             android:theme="@style/Theme.AndroidFinalProject"
-            android:windowSoftInputMode="adjustResize">
+
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -38,7 +37,8 @@
         <activity
             android:name=".MainActivity"
             android:exported="false"
-            android:theme="@style/Base.Theme.AndroidFinalProjectSecond" />
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/Base.Theme.AndroidFinalProject" />
     </application>
 
 </manifest>

@@ -9,6 +9,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import com.android.volley.BuildConfig
@@ -25,6 +26,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import androidx.activity.result.contract.ActivityResultContracts
 import mobile.dev.androidfinalproject.R
 import org.json.JSONArray
 import org.json.JSONException
@@ -35,22 +37,54 @@ class MapsFragment() : Fragment() {
     private lateinit var googleMap: GoogleMap
     private lateinit var location: LatLng
     private lateinit var requestQueue:RequestQueue
+    private val locationPermissionRequest = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        val fineLocationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
+        val coarseLocationGranted = permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
+
+        if (fineLocationGranted || coarseLocationGranted) {
+            fetchCurrentLocation()
+        } else {
+            Toast.makeText(requireContext(), "Location permission denied", Toast.LENGTH_SHORT).show()
+
+        }
+    }
 
     @SuppressLint("MissingPermission")
+    private fun fetchCurrentLocation(){
+
+        val fusedLocationClient =
+            LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { result ->
+            run {
+                Log.i("location", result.toString())
+                location = LatLng(result.latitude, result.longitude)
+                googleMap.addMarker(MarkerOptions().position(location).title("your location"))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12.0f))
+                fetchLocations()
+            }
+        }
+    }
+
+
+
+
+
     private val callback = OnMapReadyCallback { googleMap ->
         this.googleMap = googleMap
 
         location = LatLng(238.217174, -122.532560)
+        if(hasLocationPermission()) {
+           fetchCurrentLocation()
+        }else{
+            requestLocationPermission()
+            if(hasLocationPermission()){
+                fetchCurrentLocation()
+            }
+        }
 
-        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
-        fusedLocationClient.lastLocation.addOnSuccessListener{ result -> run{
-            Log.i("location", result.toString())
-            location = LatLng(result.latitude,result.longitude)
-            googleMap.addMarker(MarkerOptions().position(location).title("your location"))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12.0f))
-            fetchLocations()
-        }}
     }
 
     override fun onCreateView(
@@ -63,6 +97,7 @@ class MapsFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requestQueue = Volley.newRequestQueue(context)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
@@ -74,7 +109,6 @@ class MapsFragment() : Fragment() {
         val apiKey = "Q3h0fGEz-KQh4G2T0QhOqyeFpIry9xS4Nzx601bKNQkMaWWgfFmZG7DoryEonSQGH3P2DzryHGh0JzMvEVVhlM_ItZ-g89zbGvUhnQ_mdTM71u4ug8di_x6hv-XIZ3Yx"
         val url = "https://api.yelp.com/v3/businesses/search?term=fitness&latitude=${location.latitude}&longitude=${location.longitude}&radius=${radius}"
 
-        requestQueue = Volley.newRequestQueue(context)
         val jsonObjectRequest = object : JsonObjectRequest(
             Method.GET, url, null,
             { response-> addMarks(response) },
@@ -114,6 +148,26 @@ class MapsFragment() : Fragment() {
         } catch (e: JSONException) {
             e.printStackTrace()
         }
+    }
+
+
+
+
+    private fun hasLocationPermission(): Boolean {
+        return requireContext().checkSelfPermission(
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED || requireContext().checkSelfPermission(
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+    }
+
+    private fun requestLocationPermission() {
+        locationPermissionRequest.launch(
+            arrayOf(
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            )
+        )
     }
 
 
