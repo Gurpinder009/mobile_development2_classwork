@@ -59,11 +59,12 @@ class MapsFragment() : Fragment() {
 
         fusedLocationClient.lastLocation.addOnSuccessListener { result ->
             run {
-                Log.i("location", result.toString())
-                location = LatLng(result.latitude, result.longitude)
-                googleMap.addMarker(MarkerOptions().position(location).title("your location"))
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12.0f))
-                fetchLocations()
+                if(result != null){
+                    location = LatLng(result.latitude, result.longitude)
+                    googleMap.addMarker(MarkerOptions().position(location).title("your location"))
+                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12.0f))
+                    fetchLocations()
+                }
             }
         }
     }

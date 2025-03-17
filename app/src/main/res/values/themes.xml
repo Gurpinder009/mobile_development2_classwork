@@ -1,8 +1,28 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
     <style name="Base.Theme.AndroidFinalProject" parent="Theme.Material3.DayNight.NoActionBar">
-         <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimary">@color/primary</item>
         <item name="colorOnPrimary">@color/text_color_dark</item>
         <item name="colorPrimaryDark">@color/primary</item>
+
+        <item name="android:windowBackground">#F5FCFEFF</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="MyToolbarNavigation" parent="ThemeOverlay.Material3.Toolbar.Surface">
+        <item name="colorControlNormal">@color/text_color_dark</item>
+        <item name="titleTextColor">@color/text_color_dark</item>
+    </style>
+
+    <style name="MyBottomNavigation1" parent="ThemeOverlay.Material3.BottomAppBar">
+        <item name="android:background">@color/primary</item>
+        <item name="backgroundTint">@color/primary</item>
+        <item name="itemIconTint">@color/white</item>
+        <item name="itemTextColor">@color/white</item>
+        <item name="itemActiveIndicatorStyle">@style/MyBottomNavigationActiveIndicator</item>
+    </style>
+
+    <style name="MyBottomNavigationActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/primary_dark</item>
     </style>
 
     <style name="Theme.AndroidFinalProject" parent="Base.Theme.AndroidFinalProject" />

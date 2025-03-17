@@ -14,9 +14,8 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
-        app:titleTextColor="@color/text_color_dark"
-        app:theme="@style/Theme.AndroidFinalProject"
-        app:popupTheme="@style/Theme.AndroidFinalProject"
+
+        app:theme="@style/MyToolbarNavigation"
         app:layout_constraintTop_toTopOf="parent" />
 
 
@@ -28,7 +27,6 @@
         android:name="androidx.navigation.fragment.NavHostFragment"
         android:layout_width="0dp"
         android:layout_height="0dp"
-
         app:defaultNavHost="true"
         app:layout_constraintBottom_toTopOf="@id/bottom_nav_bar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -41,11 +39,17 @@
         app:menu="@menu/bottom_nav_bar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        style="@style/MyBottomNavigation1"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="1.0" />
+
+
+
+
+
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
