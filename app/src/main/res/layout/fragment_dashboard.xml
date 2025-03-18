@@ -12,7 +12,8 @@
 
 
     <LinearLayout
-        android:paddingVertical="75dp"
+        android:paddingTop="75dp"
+        android:paddingBottom="20dp"
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -414,11 +415,7 @@
       </LinearLayout>
 
 
-    <Button
-        android:text="signout"
-        android:id="@+id/signOut"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+
 
 
     </LinearLayout>

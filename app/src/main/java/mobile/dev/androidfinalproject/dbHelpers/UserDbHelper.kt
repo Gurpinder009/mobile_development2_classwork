@@ -28,12 +28,22 @@ class UserDbHelper {
 
 
         //for saving a document in a collection
-        fun postUser(user:UserModel,successListener:(ref:DocumentReference)->Unit, failureListener:(exception:Exception)->Unit){
+        fun postUser(user:UserModel,successListener:(Void?)->Unit, failureListener:(exception:Exception)->Unit){
             val db = SingletonFirebaseDb.getInstance().getFirestoreDb()
-            db.collection(COLLECTION_NAME).add(user)
+            db.collection(COLLECTION_NAME).document(user.emailAddress).set(user)
                 .addOnSuccessListener(successListener)
                 .addOnFailureListener(failureListener)
         }
+
+
+        fun updateDetails(email:String,data:Map<String,Any>,successListener:(Void?)->Unit, failureListener:(exception:Exception)->Unit){
+            val db = SingletonFirebaseDb.getInstance().getFirestoreDb()
+            db.collection(COLLECTION_NAME).document(email).update(data)
+                .addOnSuccessListener(successListener)
+                .addOnFailureListener(failureListener)
+        }
+
+
 
 
         //for deleting a document from the collection

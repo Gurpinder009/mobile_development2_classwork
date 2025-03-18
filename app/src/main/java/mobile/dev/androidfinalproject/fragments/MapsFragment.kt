@@ -36,7 +36,7 @@ class MapsFragment() : Fragment() {
 
     private lateinit var googleMap: GoogleMap
     private lateinit var location: LatLng
-    private lateinit var requestQueue:RequestQueue
+    private var requestQueue:RequestQueue? = null
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -98,15 +98,14 @@ class MapsFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requestQueue = Volley.newRequestQueue(context)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
 
     private fun fetchLocations() {
         val radius = 1500
+        requestQueue =Volley.newRequestQueue(context)
 
-        // TODO save it in local properties
         val apiKey = "Q3h0fGEz-KQh4G2T0QhOqyeFpIry9xS4Nzx601bKNQkMaWWgfFmZG7DoryEonSQGH3P2DzryHGh0JzMvEVVhlM_ItZ-g89zbGvUhnQ_mdTM71u4ug8di_x6hv-XIZ3Yx"
         val url = "https://api.yelp.com/v3/businesses/search?term=fitness&latitude=${location.latitude}&longitude=${location.longitude}&radius=${radius}"
 
@@ -122,7 +121,7 @@ class MapsFragment() : Fragment() {
             }
         }
 
-        requestQueue.add(jsonObjectRequest)
+        requestQueue?.add(jsonObjectRequest)
     }
 
     private fun addMarks(response: JSONObject?) {
@@ -174,7 +173,9 @@ class MapsFragment() : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        requestQueue.cancelAll(null);
+        if(requestQueue != null){
+            requestQueue!!.cancelAll(null);
+        }
     }
 }
 

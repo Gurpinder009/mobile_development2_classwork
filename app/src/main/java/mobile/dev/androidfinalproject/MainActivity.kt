@@ -1,12 +1,10 @@
 package mobile.dev.androidfinalproject
 
-import android.os.Build
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
-import android.view.WindowInsetsController
-import android.view.WindowManager
+import android.view.MenuItem
 import androidx.activity.enableEdgeToEdge
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -15,6 +13,7 @@ import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import mobile.dev.androidfinalproject.databinding.ActivityMainBinding
+import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var _binding:ActivityMainBinding
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val windowInsetsController = WindowInsetsControllerCompat(window, window.decorView)
-        windowInsetsController.isAppearanceLightStatusBars = true
+        windowInsetsController.isAppearanceLightStatusBars = false
         window.statusBarColor = ContextCompat.getColor(this, R.color.primary)
 
 
@@ -57,12 +56,25 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId) {
+            R.id.action_signout ->{
+                SingletonFirebaseAuth.getInstance().getFirebaseAuth().signOut()
+                val intent = Intent(baseContext, GetStartedActivity::class.java)
+                startActivity(intent)
+                finish()
+                true
+            }
+
+            else ->  super.onOptionsItemSelected(item)
+        }
+    }
+
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
-
-
-
 
 }

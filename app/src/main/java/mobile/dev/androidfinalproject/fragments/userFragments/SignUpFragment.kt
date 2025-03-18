@@ -80,49 +80,35 @@ class SignUpFragment (
             Toast.makeText(context,message,Toast.LENGTH_SHORT).show()
         } else{
             auth.createUserWithEmailAndPassword(email, password)
-                .addOnSuccessListener { _ ->
-                    run {
-                        val user = UserModel(firstName,lastName,email, password)
-                        UserDbHelper.postUser(user, successListener = { ref ->
+                .addOnSuccessListener {
+                    val user = UserModel(firstName, lastName, email,password)
+                    UserDbHelper.postUser(user,
+                        successListener = { _ ->
                             run {
-                                Toast.makeText(
-                                    context,
-                                    "Successfully Logged In",
-                                    Toast.LENGTH_SHORT
-                                ).show()
+                            Toast.makeText(context, "Successfully Signed Up", Toast.LENGTH_SHORT)
+                                .show()
 
-
-                                Navigation.findNavController(view).navigate(R.id.action_signUpFragment2_to_getDetailsFragment)
-
-
-
+                            val navController = Navigation.findNavController(view)
+                            if (navController.currentDestination?.id == R.id.signUpFragment2) {
+                                navController.navigate(R.id.action_signUpFragment2_to_getDetailsFragment)
                             }
-                        }, failureListener = { error ->
-                            run {
-                                Log.i("log1", "handleSignUp: $error" )
-
-                                Toast.makeText(
-                                    context,
-                                    "message $error",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-
-                        })
-
-
-                    }
+                        }
+                        },
+                        failureListener = { error ->
+                            Log.e("SignUp", "Error posting user data", error)
+                            Toast.makeText(context, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
+                        }
+                    )
                 }
                 .addOnFailureListener { error ->
-                    run {
-                        Log.i("log1", "handleSignUp: " + error.message)
-
-                        Toast.makeText(context, error.message.toString(), Toast.LENGTH_SHORT).show()
-                    }
+                    Log.e("SignUp", "Sign-up failed", error)
+                    Toast.makeText(context, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
                 }
 
 
-        }
+
+            }
+
 
 
 

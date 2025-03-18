@@ -36,19 +36,6 @@ class DashboardFragment  constructor(
         super.onViewCreated(view, savedInstanceState)
         initializeLogData()
 
-
-
-
-
-        _binding?.signOut?.setOnClickListener{
-            _-> run{
-                SingletonFirebaseAuth.getInstance().getFirebaseAuth().signOut()
-                val intent = Intent(context, GetStartedActivity::class.java)
-                startActivity(intent)
-                activity?.finish()
-            }
-        }
-
     }
 
 
