@@ -1,5 +1,6 @@
 package mobile.dev.androidfinalproject
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -13,6 +14,7 @@ import mobile.dev.androidfinalproject.databinding.FragmentGetDetailsBinding
 import mobile.dev.androidfinalproject.dbHelpers.SingletonFirebaseDb
 import mobile.dev.androidfinalproject.dbHelpers.UserDbHelper
 import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
+import java.lang.Double
 
 class GetDetailsFragment(
     private var _binding: FragmentGetDetailsBinding? = null
@@ -33,11 +35,16 @@ class GetDetailsFragment(
 
 
 
+    @SuppressLint("UseValueOf")
     fun handleSave(view:View){
 
         val data = mapOf(
-            "height" to "20",
-            "weight" to "30"
+            "height" to Double(_binding?.heightEditText?.text.toString()),
+            "weight" to Double(_binding?.weightEditText?.text.toString()),
+            "targetCalories" to Double(_binding?.targetCaloriesEditText?.text.toString()),
+            "targetSleepHours" to Double(_binding?.targetSleepHoursEditText?.text.toString()),
+            "targetWaterIntake" to Double(_binding?.targetWaterIntakeEditText?.text.toString()),
+            "targetExerciseTime" to Double(_binding?.targetExerciseTimeEditText?.text.toString()),
         )
 
         val email = SingletonFirebaseAuth.getInstance().getCurrentUser().email!!

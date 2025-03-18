@@ -81,7 +81,7 @@ class SignUpFragment (
         } else{
             auth.createUserWithEmailAndPassword(email, password)
                 .addOnSuccessListener {
-                    val user = UserModel(firstName, lastName, email,password)
+                    val user = UserModel(firstName, lastName, email)
                     UserDbHelper.postUser(user,
                         successListener = { _ ->
                             run {

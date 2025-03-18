@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import mobile.dev.androidfinalproject.GetStartedActivity
@@ -20,7 +21,7 @@ import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
 
 class DashboardFragment  constructor(
     private var _binding : FragmentDashboardBinding? = null,
-    private var healthLog: HealthLogsModel = HealthLogsModel()
+    private var healthLog: HealthLogsModel = HealthLogsModel(SingletonFirebaseAuth.getInstance().getCurrentUser().email!!)
 ) : Fragment() {
 
 
@@ -43,10 +44,26 @@ class DashboardFragment  constructor(
     private fun initializeLogData(){
         HealthLogsDbHelper.getHealthLog(
             successListener = { result -> run {
-                if(result.data !=null){ this.healthLog = HealthLogsModel.toHealthLog(result)
-                    setUiValues()
-                } } }, failureListener = { error -> run {} },
-            id = "gJxoxg6xgfa6HIdHPcSs"
+                if(result.documents.isEmpty()){
+                    HealthLogsDbHelper.postHealthLog(
+                        this.healthLog,
+                        successListener = { result ->
+                            Toast.makeText(context,"New Entry Created",Toast.LENGTH_SHORT).show()
+                        },
+                        failureListener = {}
+                    )
+                }
+                else {
+
+                    val data = result.documents.first().data
+                    this.healthLog = HealthLogsModel.toHealthLog(data!!)
+                    Toast.makeText(context,"Data loaded successfully",Toast.LENGTH_SHORT).show()
+
+
+                }
+                setUiValues()
+            } }, failureListener = { error -> run {} },
+
         )
     }
 
