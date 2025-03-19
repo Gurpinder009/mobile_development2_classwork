@@ -67,11 +67,11 @@ class SignUpFragment (
 
     fun handleSignUp(view:View){
         val auth = SingletonFirebaseAuth.getInstance().getFirebaseAuth();
-        val email = _binding?.emailAddressEditText?.text.toString()
-        val password = _binding?.passwordEditText?.text.toString()
-        val firstName = _binding?.firstNameEditText?.text.toString()
-        val lastName = _binding?.lastNameEditText?.text.toString()
-        val confirmPassword = _binding?.confirmPasswordEditText?.text.toString()
+        val email = _binding?.emailAddressEditText?.text.toString().lowercase()
+        val password = _binding?.passwordEditText?.text.toString().lowercase()
+        val firstName = _binding?.firstNameEditText?.text.toString().lowercase()
+        val lastName = _binding?.lastNameEditText?.text.toString().lowercase()
+        val confirmPassword = _binding?.confirmPasswordEditText?.text.toString().lowercase()
         val message = validateData(firstName,lastName,email,password,confirmPassword);
 
 

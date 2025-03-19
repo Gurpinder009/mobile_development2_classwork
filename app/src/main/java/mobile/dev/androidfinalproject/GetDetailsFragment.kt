@@ -48,6 +48,7 @@ class GetDetailsFragment(
         )
 
         val email = SingletonFirebaseAuth.getInstance().getCurrentUser().email!!
+        Log.i("log1", "handleSave: $email")
 
         UserDbHelper.updateDetails(email,data, successListener = { _ ->
                 Toast.makeText(context, "Data saved Successfully", Toast.LENGTH_SHORT)
