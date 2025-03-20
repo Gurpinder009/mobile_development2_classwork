@@ -13,4 +13,9 @@
         android:name="mobile.dev.androidfinalproject.fragments.MapsFragment"
         android:label="fragment_maps"
         tools:layout="@layout/fragment_maps" />
+    <fragment
+        android:id="@+id/healthLogReportFragment"
+        android:name="mobile.dev.androidfinalproject.fragments.HealthLogReportFragment"
+        android:label="fragment_reports"
+        tools:layout="@layout/fragment_health_log_report" />
 </navigation>

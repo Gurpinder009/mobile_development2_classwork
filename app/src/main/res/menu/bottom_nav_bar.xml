@@ -8,10 +8,10 @@
 
     <item
         android:id="@+id/mapsFragment"
-        android:icon="@drawable/baseline_add_location_alt_24" android:title="locator" />
+        android:icon="@drawable/baseline_add_location_alt_24" android:title="Locator" />
 
     <item
-        android:id="@+id/menu_notifications"
+        android:id="@+id/healthLogReportFragment"
         android:icon="@drawable/baseline_assignment_24" android:title="Report" />
 
 </menu>

@@ -2,7 +2,6 @@ package mobile.dev.androidfinalproject.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
-import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Bundle
 import android.util.Log
@@ -10,12 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
-import com.android.volley.BuildConfig
-import com.android.volley.Request
+
 import com.android.volley.RequestQueue
-import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
 import com.google.android.gms.location.LocationServices
@@ -32,11 +28,12 @@ import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class MapsFragment() : Fragment() {
+class MapsFragment: Fragment() {
 
     private lateinit var googleMap: GoogleMap
     private lateinit var location: LatLng
-    private var requestQueue:RequestQueue? = null
+    private var requestQueue:RequestQueue?=null
+
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -56,6 +53,7 @@ class MapsFragment() : Fragment() {
 
         val fusedLocationClient =
             LocationServices.getFusedLocationProviderClient(requireActivity())
+
 
         fusedLocationClient.lastLocation.addOnSuccessListener { result ->
             run {
@@ -98,13 +96,13 @@ class MapsFragment() : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        requestQueue=Volley.newRequestQueue(context)
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
 
     private fun fetchLocations() {
         val radius = 1500
-        requestQueue =Volley.newRequestQueue(context)
 
         val apiKey = "Q3h0fGEz-KQh4G2T0QhOqyeFpIry9xS4Nzx601bKNQkMaWWgfFmZG7DoryEonSQGH3P2DzryHGh0JzMvEVVhlM_ItZ-g89zbGvUhnQ_mdTM71u4ug8di_x6hv-XIZ3Yx"
         val url = "https://api.yelp.com/v3/businesses/search?term=fitness&latitude=${location.latitude}&longitude=${location.longitude}&radius=${radius}"
@@ -173,9 +171,11 @@ class MapsFragment() : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        if(requestQueue != null){
-            requestQueue!!.cancelAll(null);
+
+        requestQueue?.let { queue ->
+            queue.cancelAll { true }
         }
+
     }
 }
 

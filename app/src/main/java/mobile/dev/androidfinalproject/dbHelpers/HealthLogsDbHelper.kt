@@ -16,7 +16,8 @@ class HealthLogsDbHelper {
         // for getting entire collection
         fun  getHealthLogs(successListener:(result: QuerySnapshot)->Unit, failureListener:(exception:Exception)->Unit){
             val db = SingletonFirebaseDb.getInstance().getFirestoreDb()
-            db.collection(COLLECTION_NAME).get()
+            val email = SingletonFirebaseAuth.getInstance().getCurrentUser().email
+            db.collection(COLLECTION_NAME).whereEqualTo("userId",email).get()
                 .addOnSuccessListener(successListener)
                 .addOnFailureListener(failureListener)
         }
