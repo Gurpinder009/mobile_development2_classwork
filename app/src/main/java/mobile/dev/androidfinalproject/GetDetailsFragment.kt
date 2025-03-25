@@ -3,18 +3,16 @@ package mobile.dev.androidfinalproject
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.navigation.Navigation
 import mobile.dev.androidfinalproject.databinding.FragmentGetDetailsBinding
-import mobile.dev.androidfinalproject.dbHelpers.SingletonFirebaseDb
 import mobile.dev.androidfinalproject.dbHelpers.UserDbHelper
 import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
 import java.lang.Double
+
 
 class GetDetailsFragment(
     private var _binding: FragmentGetDetailsBinding? = null
@@ -23,6 +21,7 @@ class GetDetailsFragment(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         _binding = FragmentGetDetailsBinding.inflate(inflater,container,false)
         return _binding?.root
     }
@@ -48,7 +47,6 @@ class GetDetailsFragment(
         )
 
         val email = SingletonFirebaseAuth.getInstance().getCurrentUser().email!!
-        Log.i("log1", "handleSave: $email")
 
         UserDbHelper.updateDetails(email,data, successListener = { _ ->
                 Toast.makeText(context, "Data saved Successfully", Toast.LENGTH_SHORT)
@@ -61,18 +59,9 @@ class GetDetailsFragment(
 
         },
             failureListener = { error ->
-                Log.e("SignUp", "Error posting user data", error)
                 Toast.makeText(context, "Error: ${error.message}", Toast.LENGTH_SHORT).show()
             })
-
-
-
-
     }
-
-
-
-
 
 
     override fun onDestroy() {

@@ -18,4 +18,21 @@
         android:name="mobile.dev.androidfinalproject.fragments.HealthLogReportFragment"
         android:label="fragment_reports"
         tools:layout="@layout/fragment_health_log_report" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="mobile.dev.androidfinalproject.fragments.userFragments.ProfileFragment"
+        android:label="fragment_profile"
+        tools:layout="@layout/fragment_profile" >
+        <action
+            android:id="@+id/action_profileFragment_to_getDetailsFragment2"
+            app:destination="@id/getDetailsFragment2" />
+    </fragment>
+    <action
+        android:id="@+id/action_to_profile_fragment"
+        app:destination="@id/profileFragment"/>
+    <fragment
+        android:id="@+id/getDetailsFragment2"
+        android:name="mobile.dev.androidfinalproject.GetDetailsFragment"
+        android:label="fragment_get_details"
+        tools:layout="@layout/fragment_get_details" />
 </navigation>

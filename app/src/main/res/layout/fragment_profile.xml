@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:paddingTop="76dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.userFragments.ProfileFragment">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:contentDescription="@string/content_description"
+                android:scaleType="fitCenter"
+                android:src="@drawable/baseline_person_24_grey" />
+            <include android:id="@+id/profileDetailName" layout="@layout/profile_detail_layout"/>
+            <include android:id="@+id/profileDetailEmail" layout="@layout/profile_detail_layout"/>
+            <include android:id="@+id/profileDetailHeight" layout="@layout/profile_detail_layout"/>
+            <include android:id="@+id/profileDetailWeight" layout="@layout/profile_detail_layout"/>
+            <include android:id="@+id/profileDetailTargetCalories" layout="@layout/profile_detail_layout"/>
+            <include android:id="@+id/profileDetailTargetSleepCalories" layout="@layout/profile_detail_layout"/>
+            <include android:id="@+id/profileDetailTargetExerciseTime" layout="@layout/profile_detail_layout"/>
+            <include android:id="@+id/profileDetailTargetWaterIntake" layout="@layout/profile_detail_layout"/>
+            <Button
+                android:id="@+id/profileUpdateButton"
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
-
-</FrameLayout>
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/button_design"
+                android:text="Update Information"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+</ScrollView>

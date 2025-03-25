@@ -1,3 +1,5 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -7,11 +9,18 @@ plugins {
 android {
     namespace = "mobile.dev.androidfinalproject"
     compileSdk = 35
+
+
     buildFeatures {
         viewBinding = true
+        buildConfig = true
     }
 
+
+
+
     defaultConfig {
+
 
         applicationId = "mobile.dev.androidfinalproject"
         minSdk = 26
@@ -19,7 +28,16 @@ android {
         versionCode = 1
         versionName = "1.0"
 
+
+        val localProperties = Properties()
+        val localPropertiesFile = rootProject.file("local.properties")
+        if (localPropertiesFile.exists()) {
+            localProperties.load(localPropertiesFile.inputStream())
+        }
+
+
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField("String", "YELP_API_KEY", localProperties["YELP_API_KEY"]?.toString() ?: "\"\"")
     }
 
     buildTypes {

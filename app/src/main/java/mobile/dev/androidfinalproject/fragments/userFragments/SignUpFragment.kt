@@ -88,10 +88,10 @@ class SignUpFragment (
                             Toast.makeText(context, "Successfully Signed Up", Toast.LENGTH_SHORT)
                                 .show()
 
-                            val navController = Navigation.findNavController(view)
-                            if (navController.currentDestination?.id == R.id.signUpFragment2) {
+                                val navController = Navigation.findNavController(view)
+
                                 navController.navigate(R.id.action_signUpFragment2_to_getDetailsFragment)
-                            }
+
                         }
                         },
                         failureListener = { error ->

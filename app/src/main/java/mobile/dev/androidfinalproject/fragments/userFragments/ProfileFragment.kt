@@ -1,60 +1,89 @@
 package mobile.dev.androidfinalproject.fragments.userFragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.Navigation
+import com.google.firebase.auth.FirebaseUser
 import mobile.dev.androidfinalproject.R
+import mobile.dev.androidfinalproject.databinding.FragmentProfileBinding
+import mobile.dev.androidfinalproject.dbHelpers.SingletonFirebaseDb
+import mobile.dev.androidfinalproject.dbHelpers.UserDbHelper
+import mobile.dev.androidfinalproject.models.UserModel
+import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ProfileFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
-class ProfileFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+class ProfileFragment(
+    private var _binding:FragmentProfileBinding?=null,
+    private var userDetails:UserModel?=null
+) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile, container, false)
+        _binding = FragmentProfileBinding.inflate(inflater, container,false)
+        return _binding?.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ProfileFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ProfileFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val email = SingletonFirebaseAuth.getEmail()
+        UserDbHelper.getUser(email, successListener = { result ->
+                userDetails = UserModel.toUser(result)
+                initializeData(userDetails!!)
+        }, failureListener = {
+
             }
+        )
+        _binding?.profileUpdateButton?.setOnClickListener(this::handleProfileUpdate)
     }
+
+    private fun initializeData(data: UserModel){
+        setLabels()
+        setValues(data)
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun setValues(data: UserModel){
+        _binding?.profileDetailName?.profilePageValueTextView?.text = data.firstName +" " + data.lastName
+        _binding?.profileDetailEmail?.profilePageValueTextView?.text = data.emailAddress
+        _binding?.profileDetailHeight?.profilePageValueTextView?.text = data.height.toString()
+        _binding?.profileDetailWeight?.profilePageValueTextView?.text = data.weight.toString()
+        _binding?.profileDetailTargetCalories?.profilePageValueTextView?.text = data.targetCalories.toString()
+        _binding?.profileDetailTargetSleepCalories?.profilePageValueTextView?.text = data.targetSleepHours.toString()
+        _binding?.profileDetailTargetExerciseTime?.profilePageValueTextView?.text = data.targetExerciseTime.toString()
+        _binding?.profileDetailTargetWaterIntake?.profilePageValueTextView?.text = data.targetWaterIntake.toString()
+    }
+
+    private fun setLabels(){
+        _binding?.profileDetailName?.profilePageLabelTextView?.text = "Name: "
+        _binding?.profileDetailEmail?.profilePageLabelTextView?.text = "Email:"
+        _binding?.profileDetailHeight?.profilePageLabelTextView?.text = "Height: "
+        _binding?.profileDetailWeight?.profilePageLabelTextView?.text = "Weight: "
+        _binding?.profileDetailTargetCalories?.profilePageLabelTextView?.text = "Target Calories: "
+        _binding?.profileDetailTargetSleepCalories?.profilePageLabelTextView?.text = "Target Sleep Hours: "
+        _binding?.profileDetailTargetExerciseTime?.profilePageLabelTextView?.text = "Target Exercise Time:"
+        _binding?.profileDetailTargetWaterIntake?.profilePageLabelTextView?.text = "Water Intake: "
+    }
+
+
+
+
+    fun handleProfileUpdate(view:View){
+       Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_getDetailsFragment2)
+
+    }
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+
+
+
 }

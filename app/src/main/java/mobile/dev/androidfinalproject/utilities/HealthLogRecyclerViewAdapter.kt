@@ -5,8 +5,11 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import mobile.dev.androidfinalproject.databinding.HealthLogDailyReportCardBinding
+import mobile.dev.androidfinalproject.models.HealthLogsModel
 
 class HealthLogRecyclerViewAdapter(
+    private val healthLogs:List<HealthLogsModel>,
+
 ) :
     RecyclerView.Adapter<HealthLogRecyclerViewAdapter.HealthLogViewHolder>() {
 
@@ -15,11 +18,12 @@ class HealthLogRecyclerViewAdapter(
         return HealthLogViewHolder(binding)
     }
     override fun getItemCount(): Int {
-        return 5
+        return healthLogs.size
     }
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: HealthLogViewHolder, position: Int) {
-        holder.binding.dayTitle.text = "this si working"
+
+        holder.binding.dayTitle.text = "Day: ${this.itemCount-position}  (${healthLogs[position].createdAt})"
         holder.binding.progressBar.progress = 34;
         holder.binding.progressValue.text = "34%"
     }

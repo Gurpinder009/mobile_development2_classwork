@@ -1,5 +1,6 @@
 package mobile.dev.androidfinalproject.models
 
+import com.google.firebase.firestore.DocumentSnapshot
 import java.time.LocalDateTime
 
 data class UserModel(
@@ -11,20 +12,23 @@ data class UserModel(
     val createdAt: String,
     val updatedAt:String?,
     val targetCalories:Double?,
-    val targetSleepHours:Double?
+    val targetSleepHours:Double?,
+    val targetWaterIntake:Double?,
+    val targetExerciseTime:Double?,
 ) {
 
 
     public constructor(firstName: String?,lastName: String?,email: String) : this(firstName,lastName,
         emailAddress = email, null,null,
-        LocalDateTime.now().toString(),null,null,null) {
+        LocalDateTime.now().toString(),null,null,null,null,null) {
 
     }
 
 
 
     public constructor(email:String):this(null,null, emailAddress = email,null,null,
-        LocalDateTime.now().toString(),null,null,null)
+        LocalDateTime.now().toString(),null,null,null,null,null)
+
 
 
     override fun equals(other: Any?): Boolean {
@@ -60,8 +64,32 @@ data class UserModel(
     }
 
     override fun toString(): String {
-        return "UserModel( firstName='$firstName', lastName='$lastName', emailAddress='$emailAddress', height=$height, weight=$weight, createdAt=$createdAt, updatedAt=$updatedAt, targetCalories=$targetCalories, targetSleepHours=$targetSleepHours)"
+        return "UserModel(firstName=$firstName, lastName=$lastName, emailAddress='$emailAddress', height=$height, weight=$weight, createdAt='$createdAt', updatedAt=$updatedAt, targetCalories=$targetCalories, targetSleepHours=$targetSleepHours, targetWaterIntake=$targetWaterIntake, targetExerciseTime=$targetExerciseTime)"
     }
 
+
+    companion object {
+        fun toUser(result: DocumentSnapshot): UserModel {
+
+
+
+
+            return  UserModel(
+
+                firstName = result.getString("firstName"),
+                lastName = result.getString("lastName"),
+                emailAddress = result.getString("emailAddress")!!, // Mandatory field
+                height = result.getDouble("height"),
+                weight = result.getDouble("weight"),
+                createdAt = result.getString("createdAt")!!, // Mandatory field
+                updatedAt = result.getString("updatedAt"),
+                targetCalories = result.getDouble("targetCalories"),
+                targetSleepHours = result.getDouble("targetSleepHours"),
+                targetWaterIntake = result.getDouble("targetWaterIntake"),
+                targetExerciseTime = result.getDouble("targetExerciseTime"),
+
+            )
+        }
+    }
 
 }

@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import mobile.dev.androidfinalproject.databinding.ActivityMainBinding
@@ -17,6 +18,7 @@ import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
 
 class MainActivity : AppCompatActivity() {
     private lateinit var _binding:ActivityMainBinding
+    private lateinit var _navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
@@ -37,10 +39,10 @@ class MainActivity : AppCompatActivity() {
 
 
         val navHostFragment = supportFragmentManager.findFragmentById(_binding.fragmentContainerView2.id) as NavHostFragment
-        val navController = navHostFragment.navController
+        _navController = navHostFragment.navController
 
 
-        _binding.bottomNavBar.setupWithNavController(navController)
+        _binding.bottomNavBar.setupWithNavController(_navController)
 
 
         val windowInsetsController = WindowInsetsControllerCompat(window, window.decorView)
@@ -66,6 +68,14 @@ class MainActivity : AppCompatActivity() {
                 finish()
                 true
             }
+            R.id.action_profile-> {
+
+                if(_navController.currentDestination?.id != R.id.profileFragment) {
+                    _navController.navigate(R.id.action_to_profile_fragment)
+                }
+                true
+            }
+
 
             else ->  super.onOptionsItemSelected(item)
         }

@@ -9,8 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
-
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.Volley
@@ -22,18 +22,18 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
-import androidx.activity.result.contract.ActivityResultContracts
 import mobile.dev.androidfinalproject.R
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 
-class MapsFragment: Fragment() {
+class MapsFragment : Fragment() {
 
     private lateinit var googleMap: GoogleMap
     private lateinit var location: LatLng
-    private var requestQueue:RequestQueue?=null
+    private var requestQueue: RequestQueue? = null
 
+    // Location permission request
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -44,46 +44,22 @@ class MapsFragment: Fragment() {
             fetchCurrentLocation()
         } else {
             Toast.makeText(requireContext(), "Location permission denied", Toast.LENGTH_SHORT).show()
-
         }
     }
 
-    @SuppressLint("MissingPermission")
-    private fun fetchCurrentLocation(){
-
-        val fusedLocationClient =
-            LocationServices.getFusedLocationProviderClient(requireActivity())
-
-
-        fusedLocationClient.lastLocation.addOnSuccessListener { result ->
-            run {
-                if(result != null){
-                    location = LatLng(result.latitude, result.longitude)
-                    googleMap.addMarker(MarkerOptions().position(location).title("your location"))
-                    googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12.0f))
-                    fetchLocations()
-                }
-            }
-        }
-    }
-
-
-
-
-
+    // Callback for when the map is ready
     private val callback = OnMapReadyCallback { googleMap ->
         this.googleMap = googleMap
 
-        location = LatLng(238.217174, -122.532560)
-        if(hasLocationPermission()) {
-           fetchCurrentLocation()
-        }else{
-            requestLocationPermission()
-            if(hasLocationPermission()){
-                fetchCurrentLocation()
-            }
-        }
+        // Enable zoom controls
+        googleMap.uiSettings.isZoomControlsEnabled = true
 
+        // Check for location permissions
+        if (hasLocationPermission()) {
+            fetchCurrentLocation()
+        } else {
+            requestLocationPermission()
+        }
     }
 
     override fun onCreateView(
@@ -96,21 +72,48 @@ class MapsFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        requestQueue=Volley.newRequestQueue(context)
+
+        // Initialize Volley request queue
+        requestQueue = Volley.newRequestQueue(requireContext())
+
+        // Initialize the map
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
 
+    // Fetch the user's current location
+    @SuppressLint("MissingPermission")
+    private fun fetchCurrentLocation() {
+        val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
+
+        fusedLocationClient.lastLocation.addOnSuccessListener { result ->
+            if (result != null) {
+                location = LatLng(result.latitude, result.longitude)
+                googleMap.addMarker(MarkerOptions().position(location).title("Your Location"))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12.0f))
+                fetchLocations()
+            } else {
+                Toast.makeText(requireContext(), "Unable to fetch location", Toast.LENGTH_SHORT).show()
+            }
+        }.addOnFailureListener { exception ->
+            Log.e("log1", "Error fetching location: ${exception.message}")
+            Toast.makeText(requireContext(), "Error fetching location", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    // Fetch nearby fitness locations using the Yelp API
     private fun fetchLocations() {
         val radius = 1500
-
-        val apiKey = "Q3h0fGEz-KQh4G2T0QhOqyeFpIry9xS4Nzx601bKNQkMaWWgfFmZG7DoryEonSQGH3P2DzryHGh0JzMvEVVhlM_ItZ-g89zbGvUhnQ_mdTM71u4ug8di_x6hv-XIZ3Yx"
+        val apiKey = mobile.dev.androidfinalproject.BuildConfig.YELP_API_KEY
         val url = "https://api.yelp.com/v3/businesses/search?term=fitness&latitude=${location.latitude}&longitude=${location.longitude}&radius=${radius}"
 
         val jsonObjectRequest = object : JsonObjectRequest(
             Method.GET, url, null,
-            { response-> addMarks(response) },
-            { error-> Log.e("log1", "Error fetching data: ${error.message}") }
+            { response -> addMarks(response) },
+            { error ->
+                Log.e("log1", "Error fetching data: ${error.message}")
+                Toast.makeText(requireContext(), "Error fetching data", Toast.LENGTH_SHORT).show()
+            }
         ) {
             override fun getHeaders(): MutableMap<String, String> {
                 val headers = mutableMapOf<String, String>()
@@ -122,11 +125,18 @@ class MapsFragment: Fragment() {
         requestQueue?.add(jsonObjectRequest)
     }
 
+    // Add markers for nearby fitness locations
     private fun addMarks(response: JSONObject?) {
+        if (response == null) {
+            Log.i("log1", "addMarks: No response from API")
+            return
+        }
+
         try {
-            val businesses: JSONArray = response?.getJSONArray("businesses") ?: JSONArray()
+            val businesses: JSONArray = response.getJSONArray("businesses")
             if (businesses.length() == 0) {
                 Log.i("log1", "addMarks: No results found")
+                Toast.makeText(requireContext(), "No businesses found nearby", Toast.LENGTH_SHORT).show()
             } else {
                 for (i in 0 until businesses.length()) {
                     val business = businesses.getJSONObject(i)
@@ -139,18 +149,22 @@ class MapsFragment: Fragment() {
                     val lng = coordinates.getDouble("longitude")
 
                     val latLng = LatLng(lat, lng)
-                    googleMap.addMarker(MarkerOptions().position(latLng).title(name).snippet("Address: $address\nRating: $rating ⭐").icon( BitmapDescriptorFactory.defaultMarker(
-                        BitmapDescriptorFactory.HUE_CYAN)))
+                    googleMap.addMarker(
+                        MarkerOptions()
+                            .position(latLng)
+                            .title(name)
+                            .snippet("Address: $address\nRating: $rating ⭐")
+                            .icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_CYAN))
+                    )
                 }
             }
         } catch (e: JSONException) {
             e.printStackTrace()
+            Toast.makeText(requireContext(), "Error parsing API response", Toast.LENGTH_SHORT).show()
         }
     }
 
-
-
-
+    // Check if location permissions are granted
     private fun hasLocationPermission(): Boolean {
         return requireContext().checkSelfPermission(
             Manifest.permission.ACCESS_COARSE_LOCATION
@@ -159,6 +173,7 @@ class MapsFragment: Fragment() {
         ) == PackageManager.PERMISSION_GRANTED
     }
 
+    // Request location permissions
     private fun requestLocationPermission() {
         locationPermissionRequest.launch(
             arrayOf(
@@ -168,16 +183,8 @@ class MapsFragment: Fragment() {
         )
     }
 
-
     override fun onDestroy() {
         super.onDestroy()
-
-        requestQueue?.let { queue ->
-            queue.cancelAll { true }
-        }
-
+        requestQueue?.cancelAll { true }
     }
 }
-
-
-

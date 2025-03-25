@@ -21,6 +21,9 @@ class SingletonFirebaseAuth private constructor(
                 instance?: SingletonFirebaseAuth().also { instance = it}
             }
 
+        fun getEmail():String{
+            return getInstance().getCurrentUser().email!!
+        }
     }
     fun getCurrentUser():FirebaseUser{
         return auth.currentUser!!

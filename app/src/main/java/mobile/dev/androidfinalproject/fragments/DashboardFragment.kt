@@ -15,12 +15,18 @@ import mobile.dev.androidfinalproject.GetStartedActivity
 
 import mobile.dev.androidfinalproject.databinding.FragmentDashboardBinding
 import mobile.dev.androidfinalproject.dbHelpers.HealthLogsDbHelper
+import mobile.dev.androidfinalproject.dbHelpers.UserDbHelper
 import mobile.dev.androidfinalproject.models.HealthLogsModel
+import mobile.dev.androidfinalproject.models.UserModel
 import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
+import kotlin.math.abs
+import kotlin.math.round
+import kotlin.math.roundToInt
 
 
 class DashboardFragment  constructor(
     private var _binding : FragmentDashboardBinding? = null,
+    private var userDetails : UserModel? = null,
     private var healthLog: HealthLogsModel = HealthLogsModel(SingletonFirebaseAuth.getInstance().getCurrentUser().email!!)
 ) : Fragment() {
 
@@ -47,7 +53,7 @@ class DashboardFragment  constructor(
                 if(result.documents.isEmpty()){
                     HealthLogsDbHelper.postHealthLog(
                         this.healthLog,
-                        successListener = { result ->
+                        successListener = {
                             Toast.makeText(context,"New Entry Created",Toast.LENGTH_SHORT).show()
                         },
                         failureListener = {}
@@ -72,20 +78,67 @@ class DashboardFragment  constructor(
 
     @SuppressLint("SetTextI18n")
     private fun setUiValues(){
-        _binding!!.totalProgress.text = "32%";
-        _binding!!.caloriesPercentage.text =calPercentage(healthLog.caloriesConsumed!!,100.0).toString() +"%"
-        _binding!!.caloriesConsumed.text = healthLog.caloriesConsumed.toString();
-        _binding!!.sleepPercentage.text =calPercentage(healthLog.sleepDuration!!,90.0).toString() + "%"
-        _binding!!.sleepIntake.text = healthLog.sleepDuration.toString()
-        _binding!!.waterPercentage.text = calPercentage(healthLog.waterIntake!!,100.0).toString() + "%"
-        _binding!!.waterIntake.text = healthLog.waterIntake.toString()
-        _binding!!.exerciseTimePercentage.text = calPercentage(healthLog.exerciseTime!!, 80.0).toString() + "%"
-        _binding!!.exerciseTime.text = healthLog.exerciseTime.toString()
+
+        val email = SingletonFirebaseAuth.getEmail()
+        UserDbHelper.getUser(email, successListener = { result ->
+            userDetails = UserModel.toUser(result)
+            initializeData(userDetails!!)
+        }, failureListener = {
+
+        }
+        )
+
     }
 
 
-    private fun calPercentage(value:Double,total:Double): Double {
-        return (value / total )*100
+    @SuppressLint("SetTextI18n")
+    fun initializeData(userDetails: UserModel) {
+        _binding?.totalProgress?.text = "32%";
+
+
+        val caloriesConsumed = calPercentage(healthLog.caloriesConsumed?:0.0, userDetails.targetCalories?:0.0).toDouble()
+        val sleepDuration = calPercentage(healthLog.sleepDuration?:0.0, userDetails.targetSleepHours?:0.0).toDouble()
+        val waterIntake = calPercentage(healthLog.waterIntake?:0.0, userDetails.targetWaterIntake?:0.0).toDouble()
+        val exerciseTime=calPercentage(healthLog.exerciseTime?:0.0, userDetails.targetExerciseTime?:0.0).toDouble()
+        val totalProgress = calculateTotalProgress(caloriesConsumed,sleepDuration,waterIntake,exerciseTime)
+
+        _binding?.caloriesPercentage?.text = "${caloriesConsumed}%"
+        _binding!!.caloriesConsumed.text = "${(healthLog.caloriesConsumed?:0.0)} / ${userDetails.targetCalories}"
+        _binding?.sleepPercentage?.text = "${sleepDuration}%"
+        _binding!!.sleepDuration.text = "${(healthLog.sleepDuration?:0.0)} / ${userDetails.targetSleepHours}";
+        _binding?.waterPercentage?.text = "${waterIntake}%"
+        _binding!!.waterIntake.text = "${(healthLog.waterIntake?:0.0)} / ${userDetails.targetWaterIntake}";
+          _binding?.exerciseTimePercentage?.text = "${exerciseTime}%"
+        _binding!!.exerciseTime.text = "${(healthLog.exerciseTime?:0.0)} / ${userDetails.targetExerciseTime}"
+        _binding?.bmiValue?.text = calculateBMI(userDetails.weight?:0.0,userDetails.height?:0.0)
+
+
+
+        _binding?.totalProgress?.text = "${totalProgress}%"
+        _binding?.totalProgressBar?.progress = totalProgress
+
+
+    }
+
+
+
+    private fun calculateTotalProgress(calories:Double,sleepDuration:Double, waterIntake:Double,exerciseTime:Double):Int{
+        val result = (calories + sleepDuration + exerciseTime + waterIntake) / 4
+        return result.roundToInt()
+    }
+
+
+
+    private fun calculateBMI(weightKg: Double, heightFeet: Double): String {
+        val heightMeters = heightFeet * 0.3048
+        val result = weightKg / (heightMeters * heightMeters)
+        return "%.1f".format(result)
+    }
+
+
+    private fun calPercentage(value:Double,total:Double): String {
+        val result = ((value / total) * 100)
+        return "%.1f".format(result)
     }
 
 

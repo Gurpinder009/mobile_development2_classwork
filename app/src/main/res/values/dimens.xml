@@ -1,3 +1,17 @@
 <resources>
       <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="profile_page_text_size">18sp</dimen>
+    <dimen name="profile_page_between_txt_view_margin">5dp</dimen>
+    <dimen name="profile_page_between_layout_margin">15dp</dimen>
+    <dimen name="profile_page_between_layout_padding">15dp</dimen>
+
+
+
+
+
+<!--    dashboard fragment-->
+    <dimen name="dashboard_card_heading">28sp</dimen>
+    <dimen name="dashboard_card_small_text">18sp</dimen>
+
    </resources>

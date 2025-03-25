@@ -1,7 +1,8 @@
 package mobile.dev.androidfinalproject.models
 
-import com.google.firebase.firestore.DocumentSnapshot
-import java.time.LocalDate
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 data class HealthLogsModel(
@@ -15,24 +16,8 @@ data class HealthLogsModel(
 ) {
 
 
-    constructor(userId: String) : this(0.0, 0.0,0.0,0.0,userId)
-    constructor(
-        caloriesConsumed: Double?,
-        sleepDuration: Double?,
-        waterIntake: Double?,
-        exerciseTime: Double?,
-        userId: String
-    ) : this(null,caloriesConsumed,sleepDuration,waterIntake,exerciseTime,userId, LocalDate.now().toString())
+    constructor(userId: String) : this(0L, 0.0,0.0,0.0,0.0,userId,"")
 
-
-    constructor(
-        id: Long,
-        caloriesConsumed: Double?,
-        sleepDuration: Double?,
-        waterIntake: Double?,
-        exerciseTime: Double?,
-        userId: String
-    ) : this(id,caloriesConsumed,sleepDuration,waterIntake,exerciseTime,userId,LocalDate.now().toString())
 
 
 
@@ -63,18 +48,29 @@ data class HealthLogsModel(
     }
 
     override fun toString(): String {
-        return "HealthLogsModel(id=$id, caloriesConsumed=$caloriesConsumed,  sleepDuration=$sleepDuration, waterIntake=$waterIntake, userId=$userId)"
+        return "HealthLogsModel(id=$id, caloriesConsumed=$caloriesConsumed, sleepDuration=$sleepDuration, waterIntake=$waterIntake, exerciseTime=$exerciseTime, userId='$userId', createdAt='$createdAt')"
     }
+
+
+    fun getDate(): Date? {
+        return try {
+            val format = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()) // Match your date format
+            format.parse(createdAt) // Convert String to Date
+        } catch (e: Exception) {
+            null
+        }
+    }
+
 
     companion object {
         fun toHealthLog(result: Map<String,Any>): HealthLogsModel {
-            // Use safe calls and handle potential null values
-            val id = (result["id"] as? Number)?.toLong() ?: 0 // Default to 0 or handle null as needed
-            val waterIntake = result["waterIntake"] as? Double?
-            val sleepDuration = result["sleepDuration"] as? Double?
-            val exerciseTime = result["exerciseTime"] as? Double?
-            val userId = result["userId"] as String
-            val caloriesConsumed = result["caloriesConsumed"]  as? Double?
+            val id = (result["id"] as? Number)?.toLong() ?: 0L
+            val waterIntake = (result["waterIntake"] as? Number)?.toDouble() ?: 0.0
+            val sleepDuration = (result["sleepDuration"] as? Number)?.toDouble() ?: 0.0
+            val exerciseTime = (result["exerciseTime"] as? Number)?.toDouble()
+            val userId = result["userId"] as? String ?: "Unknown"
+            val caloriesConsumed = (result["caloriesConsumed"] as? Number)?.toDouble() ?: 0.0
+            val createdAt = (result["createdAt"]).toString()
 
             return HealthLogsModel(
                 id = id,
@@ -82,7 +78,8 @@ data class HealthLogsModel(
                 sleepDuration = sleepDuration,
                 waterIntake = waterIntake,
                 exerciseTime = exerciseTime,
-                userId = userId
+                userId = userId,
+                createdAt = createdAt
             )
         }
     }

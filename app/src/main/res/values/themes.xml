@@ -26,7 +26,7 @@
     </style>
 
     <style name="MyPopupTheme" parent="Theme.Material3.DayNight.Dialog">
-        <!-- Define your popup theme attributes here -->
+        <item name="android:backgroundTint">#FFFCFEFF</item>
     </style>
 
     <style name="Theme.AndroidFinalProject" parent="Base.Theme.AndroidFinalProject" />
