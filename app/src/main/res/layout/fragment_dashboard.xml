@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-        android:layout_marginTop="16dp"
 
     tools:context=".fragments.DashboardFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:layout_marginTop="16dp">
 
 
 
@@ -96,7 +102,7 @@
 
         <TextView
             android:text="your activities"
-            android:textSize="32sp"
+            android:textSize="28sp"
             android:layout_marginHorizontal="16dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
@@ -151,7 +157,8 @@
                          android:layout_height="wrap_content"
                          android:text="57%"/>
 
-              </LinearLayout>
+
+                 </LinearLayout>
 
 
 
@@ -402,11 +409,13 @@
 
 
               </LinearLayout>
+
           </androidx.cardview.widget.CardView>
 
 
 
 
+          <Button android:layout_width="match_parent" android:layout_marginHorizontal="16dp" android:layout_marginTop="10dp" android:layout_height="wrap_content" android:background="@drawable/outlined_button_design" android:text="Update data"/>
 
 
       </LinearLayout>
@@ -414,10 +423,17 @@
 
 
 
-
     </LinearLayout>
 
+    </ScrollView>
 
+<!--    <com.google.android.material.floatingactionbutton.FloatingActionButton-->
+<!--        android:id="@+id/fab"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom|end"-->
+<!--        android:layout_margin="16dp"-->
+<!--        android:contentDescription="submit button"-->
+<!--        app:srcCompat="@drawable/baseline_edit_24"/>-->
 
-
-</ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

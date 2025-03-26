@@ -1,6 +1,7 @@
 package mobile.dev.androidfinalproject.models
 
 import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.Date
 import java.util.Locale
 
@@ -16,7 +17,7 @@ data class HealthLogsModel(
 ) {
 
 
-    constructor(userId: String) : this(0L, 0.0,0.0,0.0,0.0,userId,"")
+    constructor(userId: String) : this(0L, 0.0,0.0,0.0,0.0,userId, LocalDate.now().toString())
 
 
 
