@@ -11,7 +11,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
+import androidx.navigation.Navigation
 import mobile.dev.androidfinalproject.GetStartedActivity
+import mobile.dev.androidfinalproject.R
 
 import mobile.dev.androidfinalproject.databinding.FragmentDashboardBinding
 import mobile.dev.androidfinalproject.dbHelpers.HealthLogsDbHelper
@@ -42,7 +44,13 @@ class DashboardFragment  constructor(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initializeLogData()
+        _binding?.updateDetailsBtn?.setOnClickListener(this::updateDetails)
 
+    }
+
+    fun updateDetails(view:View){
+        val action = DashboardFragmentDirections.actionDashboardFragmentToUpdateDetails(healthLog)
+        Navigation.findNavController(view).navigate(action)
     }
 
 

@@ -1,12 +1,10 @@
 package mobile.dev.androidfinalproject.dbHelpers
 
 import com.google.firebase.firestore.DocumentReference
-import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import mobile.dev.androidfinalproject.models.HealthLogsModel
 import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 class HealthLogsDbHelper {
 
@@ -33,7 +31,6 @@ class HealthLogsDbHelper {
                 .addOnFailureListener (failureListener)
         }
 
-
         //for saving a document in a collection
         fun postHealthLog(healthLog: HealthLogsModel, successListener:(ref: DocumentReference)->Unit, failureListener:(exception:Exception)->Unit){
             val db = SingletonFirebaseDb.getInstance().getFirestoreDb()
@@ -42,14 +39,26 @@ class HealthLogsDbHelper {
                 .addOnFailureListener(failureListener)
         }
 
-
-        //for deleting a document from the collection
-        fun deleteHealthLog(id:String,successListener:(Void)->Unit, failureListener:(exception:Exception)->Unit){
+        //for updating a document in a collection
+     fun updateHealthLog(
+            updatedHealthLog: HealthLogsModel,
+            successListener: () -> Unit,
+            failureListener: (exception: Exception) -> Unit
+        ) {
             val db = SingletonFirebaseDb.getInstance().getFirestoreDb()
-            db.collection(COLLECTION_NAME).document(id).delete()
-                .addOnSuccessListener(successListener)
-                .addOnFailureListener (failureListener)
+
+            getHealthLog(successListener={result ->
+                val docs = result.documents
+                for (ele in docs) {
+                    db.collection(COLLECTION_NAME).document(ele.id).set(updatedHealthLog)
+                        .addOnSuccessListener {successListener()}
+                        .addOnFailureListener (failureListener)
+                }
+            },failureListener)
         }
+
+
+
 
     }
 }

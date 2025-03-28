@@ -68,13 +68,6 @@ class MainActivity : AppCompatActivity() {
                 finish()
                 true
             }
-            R.id.action_profile-> {
-
-                if(_navController.currentDestination?.id != R.id.profileFragment) {
-                    _navController.navigate(R.id.action_to_profile_fragment)
-                }
-                true
-            }
 
 
             else ->  super.onOptionsItemSelected(item)

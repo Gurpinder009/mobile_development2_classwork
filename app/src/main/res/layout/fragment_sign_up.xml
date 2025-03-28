@@ -11,7 +11,6 @@
         android:layout_height="match_parent">
 
 
-
         <ScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -21,115 +20,155 @@
             android:gravity="center_horizontal"
             app:layout_constraintTop_toTopOf="parent">
 
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingVertical="20dp"
-           >
-
-
-
-        <TextView
-                android:id="@+id/signUpPageTextView"
-                android:layout_width="match_parent"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="36sp"
-                android:text="@string/signUpPageTitleText" />
+                android:orientation="vertical"
+                android:paddingVertical="20dp">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                <TextView
+                    android:id="@+id/signUpPageTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textSize="36sp"
+                    android:text="@string/signUpPageTitleText" />
 
-            <EditText
-                android:id="@+id/firstNameEditText"
-                android:layout_width="290dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/firstNameInputHelperText"
-                android:autofillHints="name"
-                android:inputType="text"
-                android:minHeight="48dp" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-            <EditText
-                android:id="@+id/lastNameEditText"
-                android:layout_width="290dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/lastNameInputHelperText"
-                android:autofillHints="emailAddress"
-                android:inputType="textEmailAddress"
-                android:minHeight="48dp" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/firstNameEditTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/firstNameInputHelperText"
+                   
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-            <EditText
-                android:id="@+id/emailAddressEditText"
-                android:layout_width="290dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/emailInputHelperText"
-                android:autofillHints="emailAddress"
-                android:inputType="textEmailAddress"
-                android:minHeight="48dp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/firstNameEditText"
+                        android:layout_width="290dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:autofillHints="name"
+                        android:inputType="text"
+                        android:minHeight="48dp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
 
-            <EditText
-                android:autofillHints="password"
-                android:id="@+id/passwordEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/passwordInputHelperText"
-                android:inputType="textPassword"
-                android:minHeight="48dp" />
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
-            <EditText
-                android:autofillHints="password"
-                android:id="@+id/confirmPasswordEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/passwordInputHelperText"
-                android:inputType="textPassword"
-                android:minHeight="48dp" />
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/lastNameEditTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/lastNameInputHelperText"
+                   
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
-            <Button
-                android:id="@+id/signupPageBtn"
-                android:background="@drawable/button_design"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/signUpPageBtnText" />
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="10dp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/lastNameEditText"
+                        android:layout_width="290dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:autofillHints="name"
+                        android:inputType="text"
+                        android:minHeight="48dp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-            <TextView
-                android:id="@+id/signupToLoginTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="true"
-                android:focusable="true"
-                android:minHeight="48dp"
-                android:text="@string/signUpToLoginText"
-                android:textAlignment="center" />
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
 
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/emailAddressEditTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/emailInputHelperText"
+                   
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
 
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/emailAddressEditText"
+                        android:layout_width="290dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:autofillHints="emailAddress"
+                        android:inputType="textEmailAddress"
+                        android:minHeight="48dp" />
+                </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/passwordEditTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/passwordInputHelperText"
+                   
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/passwordEditText"
+                        android:layout_width="290dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:autofillHints="password"
+                        android:inputType="textPassword"
+                        android:minHeight="48dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/confirmPasswordEditTextLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/passwordInputHelperText"
+                   
+                    style="@style/Widget.Material3.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/confirmPasswordEditText"
+                        android:layout_width="290dp"
+                        android:layout_height="wrap_content"
+                        android:ems="10"
+                        android:autofillHints="password"
+                        android:inputType="textPassword"
+                        android:minHeight="48dp" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <Button
+                    android:id="@+id/signupPageBtn"
+                    android:background="@drawable/button_design"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signUpPageBtnText" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp" />
+
+                <TextView
+                    android:id="@+id/signupToLoginTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:minHeight="48dp"
+                    android:text="@string/signUpToLoginText"
+                    android:textAlignment="center" />
+
+            </LinearLayout>
         </ScrollView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

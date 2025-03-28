@@ -3,12 +3,131 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.UpdateDetails">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+
+            <ScrollView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:gravity="center_horizontal"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingVertical="20dp">
+
+                    <TextView
+                        android:id="@+id/getDetailsTextView0"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="28sp"
+                        android:text="Update" />
+
+                    <TextView
+                        android:id="@+id/getDetailsTextView1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="36sp"
+                        android:text="Information" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Calories">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/caloriesInputEditView"
+                            android:layout_width="280dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="name"
+                            android:inputType="numberDecimal"
+                            android:minHeight="48dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Sleep duration">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/sleepInputEditText"
+                            android:layout_width="280dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="decimal"
+                            android:inputType="numberDecimal"
+                            android:minHeight="48dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Water Intake">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/waterInputEditText"
+                            android:layout_width="280dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="decimal"
+                            android:inputType="numberDecimal"
+                            android:minHeight="48dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Enter Exercise Time">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/exerciseInputEditText"
+                            android:layout_width="280dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints="decimal"
+                            android:inputType="numberDecimal"
+                            android:minHeight="48dp" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="10dp" />
+                    <Button
+                        android:id="@+id/updateDetailsSavingBtn"
+                        android:background="@drawable/button_design"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/more_details_save_btn" />
+                </LinearLayout>
+            </ScrollView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
 
 </FrameLayout>

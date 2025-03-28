@@ -40,7 +40,7 @@
     </fragment>
     <fragment
         android:id="@+id/getDetailsFragment"
-        android:name="mobile.dev.androidfinalproject.GetDetailsFragment"
+        android:name="mobile.dev.androidfinalproject.fragments.GetDetailsFragment"
         android:label="fragment_get_details"
         tools:layout="@layout/fragment_get_details" />
 </navigation>

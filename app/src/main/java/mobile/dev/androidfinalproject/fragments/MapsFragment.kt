@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.android.volley.RequestQueue
 import com.android.volley.toolbox.JsonObjectRequest
@@ -33,28 +34,26 @@ class MapsFragment : Fragment() {
     private lateinit var location: LatLng
     private var requestQueue: RequestQueue? = null
 
-    // Location permission request
+    companion object {
+        private const val TAG = "MapsFragment"
+        private const val RADIUS = 1500
+        private const val ZOOM_LEVEL = 12.0f
+    }
+
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
-        val fineLocationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
-        val coarseLocationGranted = permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
-
-        if (fineLocationGranted || coarseLocationGranted) {
+        if (permissions[Manifest.permission.ACCESS_FINE_LOCATION] == true ||
+            permissions[Manifest.permission.ACCESS_COARSE_LOCATION] == true) {
             fetchCurrentLocation()
         } else {
-            Toast.makeText(requireContext(), "Location permission denied", Toast.LENGTH_SHORT).show()
+            showToast("Location permission denied")
         }
     }
 
-    // Callback for when the map is ready
     private val callback = OnMapReadyCallback { googleMap ->
         this.googleMap = googleMap
-
-        // Enable zoom controls
         googleMap.uiSettings.isZoomControlsEnabled = true
-
-        // Check for location permissions
         if (hasLocationPermission()) {
             fetchCurrentLocation()
         } else {
@@ -63,92 +62,76 @@ class MapsFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // Initialize Volley request queue
         requestQueue = Volley.newRequestQueue(requireContext())
-
-        // Initialize the map
         val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
 
-    // Fetch the user's current location
     @SuppressLint("MissingPermission")
     private fun fetchCurrentLocation() {
         val fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
-
         fusedLocationClient.lastLocation.addOnSuccessListener { result ->
             if (result != null) {
                 location = LatLng(result.latitude, result.longitude)
                 googleMap.addMarker(MarkerOptions().position(location).title("Your Location"))
-                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 12.0f))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, ZOOM_LEVEL))
                 fetchLocations()
             } else {
-                Toast.makeText(requireContext(), "Unable to fetch location", Toast.LENGTH_SHORT).show()
+                showToast("Unable to fetch location")
             }
         }.addOnFailureListener { exception ->
-            Log.e("log1", "Error fetching location: ${exception.message}")
-            Toast.makeText(requireContext(), "Error fetching location", Toast.LENGTH_SHORT).show()
+            logError("Error fetching location: ${exception.message}")
+            showToast("Error fetching location")
         }
     }
 
-    // Fetch nearby fitness locations using the Yelp API
     private fun fetchLocations() {
-        val radius = 1500
         val apiKey = mobile.dev.androidfinalproject.BuildConfig.YELP_API_KEY
-        val url = "https://api.yelp.com/v3/businesses/search?term=fitness&latitude=${location.latitude}&longitude=${location.longitude}&radius=${radius}"
+        val url = "https://api.yelp.com/v3/businesses/search?term=fitness&latitude=${location.latitude}&longitude=${location.longitude}&radius=$RADIUS"
 
         val jsonObjectRequest = object : JsonObjectRequest(
             Method.GET, url, null,
-            { response -> addMarks(response) },
+            { response -> addMarkers(response) },
             { error ->
-                Log.e("log1", "Error fetching data: ${error.message}")
-                Toast.makeText(requireContext(), "Error fetching data", Toast.LENGTH_SHORT).show()
+                logError("Error fetching data: ${error.message}")
+                showToast("Error fetching data")
             }
         ) {
             override fun getHeaders(): MutableMap<String, String> {
-                val headers = mutableMapOf<String, String>()
-                headers["Authorization"] = "Bearer $apiKey"
-                return headers
+                return mutableMapOf("Authorization" to "Bearer $apiKey")
             }
         }
 
         requestQueue?.add(jsonObjectRequest)
     }
 
-    // Add markers for nearby fitness locations
-    private fun addMarks(response: JSONObject?) {
+    private fun addMarkers(response: JSONObject?) {
         if (response == null) {
-            Log.i("log1", "addMarks: No response from API")
+            logInfo("No response from API")
             return
         }
 
         try {
             val businesses: JSONArray = response.getJSONArray("businesses")
             if (businesses.length() == 0) {
-                Log.i("log1", "addMarks: No results found")
-                Toast.makeText(requireContext(), "No businesses found nearby", Toast.LENGTH_SHORT).show()
+                logInfo("No results found")
+                showToast("No businesses found nearby")
             } else {
                 for (i in 0 until businesses.length()) {
                     val business = businesses.getJSONObject(i)
                     val name = business.getString("name")
-                    val location = business.getJSONObject("location")
-                    val address = location.getString("address1")
+                    val address = business.getJSONObject("location").getString("address1")
                     val coordinates = business.getJSONObject("coordinates")
                     val rating = business.getString("rating")
-                    val lat = coordinates.getDouble("latitude")
-                    val lng = coordinates.getDouble("longitude")
+                    val latLng = LatLng(coordinates.getDouble("latitude"), coordinates.getDouble("longitude"))
 
-                    val latLng = LatLng(lat, lng)
                     googleMap.addMarker(
                         MarkerOptions()
                             .position(latLng)
@@ -160,27 +143,34 @@ class MapsFragment : Fragment() {
             }
         } catch (e: JSONException) {
             e.printStackTrace()
-            Toast.makeText(requireContext(), "Error parsing API response", Toast.LENGTH_SHORT).show()
+            showToast("Error parsing API response")
         }
     }
 
-    // Check if location permissions are granted
     private fun hasLocationPermission(): Boolean {
-        return requireContext().checkSelfPermission(
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED || requireContext().checkSelfPermission(
-            Manifest.permission.ACCESS_FINE_LOCATION
+        return ContextCompat.checkSelfPermission(
+            requireContext(), Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
+            requireContext(), Manifest.permission.ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
     }
 
-    // Request location permissions
     private fun requestLocationPermission() {
         locationPermissionRequest.launch(
-            arrayOf(
-                Manifest.permission.ACCESS_FINE_LOCATION,
-                Manifest.permission.ACCESS_COARSE_LOCATION
-            )
+            arrayOf(Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION)
         )
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun logError(message: String) {
+        Log.e(TAG, message)
+    }
+
+    private fun logInfo(message: String) {
+        Log.i(TAG, message)
     }
 
     override fun onDestroy() {

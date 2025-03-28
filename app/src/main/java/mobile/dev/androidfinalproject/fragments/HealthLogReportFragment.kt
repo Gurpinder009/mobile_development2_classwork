@@ -24,7 +24,6 @@ class HealthLogReportFragment(
 )
     : Fragment() {
 
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,32 +32,25 @@ class HealthLogReportFragment(
         return _binding?.root
     }
 
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         HealthLogsDbHelper.getHealthLogs(
             successListener = { result ->
-                _listOfLogs.clear() // Clear old data before adding new logs
+                _listOfLogs.clear()
 
 
                 if (result.documents.isEmpty()) {
                     Log.i("log1", "No health logs found.")
                 } else {
-
                     for (docs in result.documents) {
-
                         docs.data?.let { data ->
                             val ele = HealthLogsModel.toHealthLog(data)
-
-
                             _listOfLogs.add(ele)
                         }
-
                     }
-
                 }
-                _listOfLogs.sortByDescending { it.getDate() }
+                _listOfLogs.sortByDescending { it.simpleDate() }
                 // Update adapter correctly
                 if (_binding?.recycler?.adapter == null) {
                     _binding?.recycler?.layoutManager = LinearLayoutManager(context)
@@ -72,9 +64,7 @@ class HealthLogReportFragment(
                 Log.e("HealthLogsError", "Error fetching logs", error)
             }
         )
-
     }
-
 
     override fun onDestroy() {
         super.onDestroy()

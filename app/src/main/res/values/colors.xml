@@ -1,10 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
-    <color name="primary">#003366</color>
+
+    <color name="primary">#E8145390</color>
+    <color name="primary_dark">#B73A8CDE</color>
+    <color name="color_on_primary">#ffffff</color>
+    <color name="color_on_primary_dark">#ffffff</color>
+
+
+    <color name="text_color_dark">#212121</color>
+    <color name="text_color_light">#FFFFFF</color>
+    <color name="window_background">#F5FCFE</color>
+
     <color name="primary_darker">#003366</color>
 
-    <color name="primary_dark">#B73A8CDE</color>
-    <color name="text_color_dark">@color/white</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+
+    <color name="popup_background">#FFFCFE</color>
+
 </resources>

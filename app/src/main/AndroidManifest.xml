@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AndroidFinalProject"
+        android:theme="@style/Base.Theme.AndroidFinalProject"
         tools:targetApi="31">
 
         <meta-data
@@ -25,7 +25,7 @@
         <activity
             android:name=".GetStartedActivity"
             android:exported="true"
-            android:theme="@style/Theme.AndroidFinalProject"
+            android:theme="@style/Base.Theme.AndroidFinalProject"
 
             android:windowSoftInputMode="adjustPan">
             <intent-filter>

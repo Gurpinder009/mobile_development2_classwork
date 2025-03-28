@@ -73,7 +73,8 @@ class ProfileFragment(
 
 
     fun handleProfileUpdate(view:View){
-       Navigation.findNavController(view).navigate(R.id.action_profileFragment_to_getDetailsFragment2)
+        val action = ProfileFragmentDirections.actionProfileFragmentToGetDetailsFragment2(userDetails!!)
+       Navigation.findNavController(view).navigate(action)
 
     }
 

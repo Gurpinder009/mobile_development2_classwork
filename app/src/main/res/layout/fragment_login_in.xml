@@ -33,29 +33,51 @@
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <EditText
-                android:id="@+id/emailAddressEditText"
-                android:layout_width="280dp"
+
+
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/text_field_layout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="@string/emailInputHelperText"
-                android:autofillHints="emailAddress"
-                android:inputType="textEmailAddress"
-                android:minHeight="48dp" />
+                android:hint="@string/emailInputLayoutHelperText"
+               >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/emailAddressEditText"
+                    android:autofillHints="emailAddress"
+                    android:inputType="textEmailAddress"
+                    android:ems="10"
+                    android:minHeight="48dp"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content" />
+
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />
 
-            <EditText
-                android:autofillHints="password"
-                android:id="@+id/passwordEditText"
+            <com.google.android.material.textfield.TextInputLayout
+
+                android:id="@+id/passwordInputTextLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:ems="10"
                 android:hint="@string/passwordInputHelperText"
-                android:inputType="textPassword"
-                android:minHeight="48dp" />
+                >
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/passwordEditText"
+                    android:autofillHints="password"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ems="10"
+                    android:inputType="textPassword"
+                    android:minHeight="48dp"  />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="10dp" />

@@ -1,19 +1,22 @@
 <resources>
-    <style name="Base.Theme.AndroidFinalProject" parent="Theme.Material3.DayNight.NoActionBar">
-        <item name="colorPrimary">@color/primary</item>
-        <item name="colorOnPrimary">@color/text_color_dark</item>
-        <item name="colorPrimaryDark">@color/primary</item>
 
-        <item name="android:windowBackground">#F5FCFEFF</item>
+    <!-- Base theme for the app -->
+    <style name="Base.Theme.AndroidFinalProject" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorOnPrimary">@color/color_on_primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="android:windowBackground">@color/window_background</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
     </style>
 
+    <!-- Toolbar style -->
     <style name="MyToolbarNavigation" parent="ThemeOverlay.Material3.Toolbar.Surface">
-        <item name="colorControlNormal">@color/text_color_dark</item>
-        <item name="titleTextColor">@color/text_color_dark</item>
+        <item name="colorControlNormal">@color/text_color_light</item>
+        <item name="titleTextColor">@color/text_color_light</item>
     </style>
 
-    <style name="MyBottomNavigation1" parent="ThemeOverlay.Material3.BottomAppBar">
+    <!-- Bottom Navigation style -->
+    <style name="MyBottomNavigation" parent="ThemeOverlay.Material3.BottomAppBar">
         <item name="android:background">@color/primary</item>
         <item name="backgroundTint">@color/primary</item>
         <item name="itemIconTint">@color/white</item>
@@ -21,13 +24,14 @@
         <item name="itemActiveIndicatorStyle">@style/MyBottomNavigationActiveIndicator</item>
     </style>
 
+    <!-- Active indicator for Bottom Navigation -->
     <style name="MyBottomNavigationActiveIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/primary_dark</item>
     </style>
 
+    <!-- Popup theme style -->
     <style name="MyPopupTheme" parent="Theme.Material3.DayNight.Dialog">
-        <item name="android:backgroundTint">#FFFCFEFF</item>
+        <item name="android:backgroundTint">@color/popup_background</item>
     </style>
 
-    <style name="Theme.AndroidFinalProject" parent="Base.Theme.AndroidFinalProject" />
 </resources>

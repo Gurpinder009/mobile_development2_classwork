@@ -3,7 +3,9 @@ import java.util.Properties
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    id("com.google.gms.google-services")
+    alias(libs.plugins.google.services)
+    id("androidx.navigation.safeargs.kotlin")  // ✅ Safe Args Plugin
+    id("kotlin-parcelize")
 }
 
 android {

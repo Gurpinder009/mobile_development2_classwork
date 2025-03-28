@@ -5,56 +5,85 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import mobile.dev.androidfinalproject.R
+import mobile.dev.androidfinalproject.databinding.FragmentUpdateDetailsBinding
+import mobile.dev.androidfinalproject.dbHelpers.HealthLogsDbHelper
+import mobile.dev.androidfinalproject.models.HealthLogsModel
+import java.time.LocalDate
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [UpdateDetails.newInstance] factory method to
- * create an instance of this fragment.
- */
-class UpdateDetails : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+class UpdateDetails(
+    private var binding:FragmentUpdateDetailsBinding?= null,
+) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_update_details, container, false)
+        binding = FragmentUpdateDetailsBinding.inflate(inflater, container,false)
+        return binding?.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment UpdateDetails.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            UpdateDetails().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val args: UpdateDetailsArgs by navArgs()
+        val healthLog = args.healthLogsModel
+        initializeValues(healthLog)
+        this.binding?.updateDetailsSavingBtn?.setOnClickListener(this::handleUpdate)
     }
+
+
+
+    private fun initializeValues(healthLog: HealthLogsModel){
+        binding?.caloriesInputEditView?.setText(healthLog.caloriesConsumed.toString())
+        binding?.sleepInputEditText?.setText(healthLog.sleepDuration.toString())
+        binding?.waterInputEditText?.setText(healthLog.waterIntake.toString())
+        binding?.exerciseInputEditText?.setText(healthLog.exerciseTime.toString())
+
+
+    }
+
+
+
+
+
+
+   fun handleUpdate(view:View) {
+       val calories = binding?.caloriesInputEditView?.text.toString().toDouble()
+       val sleep = binding?.sleepInputEditText?.text.toString().toDouble()
+       val water = binding?.waterInputEditText?.text.toString().toDouble()
+       val exercise = binding?.exerciseInputEditText?.text.toString().toDouble()
+
+
+
+
+
+
+        val updatedHealthLog = HealthLogsModel(0L,calories,sleep,water,exercise,"singh@gmail.com",LocalDate.now().toString())
+       HealthLogsDbHelper.updateHealthLog(
+            updatedHealthLog,
+            successListener = {
+                Navigation.findNavController(view).popBackStack()
+            },
+            failureListener = { error:Exception ->
+                Toast.makeText(context, "Update failed: ${error.message}", Toast.LENGTH_SHORT).show()
+            }
+        )
+    }
+
+
+
+
+
+
+
+    override fun onDestroy() {
+        super.onDestroy()
+        binding = null;
+    }
+
 }
