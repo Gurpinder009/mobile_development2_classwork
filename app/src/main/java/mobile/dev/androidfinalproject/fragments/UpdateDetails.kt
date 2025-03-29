@@ -77,7 +77,7 @@ class UpdateDetails(
         healthLogViewModel?.updateHealthLog(updatedHealthLog,
             successListener = {
                 Toast.makeText(requireContext(), "Updated Successfully", Toast.LENGTH_SHORT).show()
-                Navigation.findNavController(view).popBackStack()
+                Navigation.findNavController(view).popBackStack(R.id.dashboardFragment,false)
             },
             failureListener = { error ->
                 Toast.makeText(requireContext(), "Failed to update: ${error.message}", Toast.LENGTH_SHORT).show()

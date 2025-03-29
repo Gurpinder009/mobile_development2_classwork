@@ -13,8 +13,8 @@ import mobile.dev.androidfinalproject.models.UserModel
 import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
 import mobile.dev.androidfinalproject.viewModels.HealthLogViewModel
 import mobile.dev.androidfinalproject.viewModels.UserViewModel
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
+import mobile.dev.androidfinalproject.R
 
 import kotlin.math.roundToInt
 
@@ -44,8 +44,8 @@ class DashboardFragment  constructor(
     }
 
     fun updateDetails(view:View){
-        val action = DashboardFragmentDirections.actionDashboardFragmentToUpdateDetails(healthLog)
-        Navigation.findNavController(view).navigate(action)
+
+        Navigation.findNavController(view).navigate(R.id.action_dashboardFragment_to_updateDetails)
     }
 
 
@@ -73,7 +73,6 @@ class DashboardFragment  constructor(
 
     @SuppressLint("SetTextI18n")
     fun initializeData(userDetails: UserModel) {
-        _binding?.totalProgress?.text = "32%";
 
 
         val caloriesConsumed = calPercentage(healthLog.caloriesConsumed?:0.0, userDetails.targetCalories?:0.0).toDouble()

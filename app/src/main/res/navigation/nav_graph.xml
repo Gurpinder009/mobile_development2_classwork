@@ -12,12 +12,7 @@
         <action
             android:id="@+id/action_dashboardFragment_to_updateDetails"
             app:destination="@id/updateDetails" />
-        <argument
-            android:name="healthLog"
-            app:argType="mobile.dev.androidfinalproject.models.HealthLogsModel" />
-
     </fragment>
-
     <fragment
         android:id="@+id/mapsFragment"
         android:name="mobile.dev.androidfinalproject.fragments.MapsFragment"
@@ -57,14 +52,17 @@
             app:argType="mobile.dev.androidfinalproject.models.UserModel" />
     </fragment>
 
+
     <fragment
         android:id="@+id/updateDetails"
         android:name="mobile.dev.androidfinalproject.fragments.UpdateDetails"
         android:label="fragment_update_details"
         tools:layout="@layout/fragment_update_details">
-        <!-- Declare any arguments needed -->
+
+
         <argument
             android:name="healthLogsModel"
             app:argType="mobile.dev.androidfinalproject.models.HealthLogsModel" />
+
     </fragment>
 </navigation>

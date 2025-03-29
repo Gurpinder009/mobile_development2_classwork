@@ -31,7 +31,7 @@ class GetDetailsFragment(
         super.onViewCreated(view, savedInstanceState)
         _binding?.moreDetailsSaveBtn?.setOnClickListener(this::handleSave)
 
-        val args: GetDetailsFragmentArgs by navArgs()
+        val args = GetDetailsFragmentArgs.fromBundle(arguments?: Bundle())
         val user:UserModel? = args.userDetails
         if(user!= null) {
             initialize(user)

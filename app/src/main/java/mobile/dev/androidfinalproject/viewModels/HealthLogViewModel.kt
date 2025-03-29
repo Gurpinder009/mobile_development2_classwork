@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.navigation.Navigation
 import com.google.android.gms.tasks.OnFailureListener
+import com.google.firebase.firestore.DocumentReference
 import mobile.dev.androidfinalproject.dbHelpers.HealthLogsDbHelper
 import mobile.dev.androidfinalproject.models.HealthLogsModel
 import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
@@ -28,7 +29,7 @@ class HealthLogViewModel : ViewModel() {
         Log.i("log1", "setHealthLog: ${_healthLog.value}")
     }
 
-    fun fetchHealthLog() {
+    fun fetchHealthLog(successListener: () -> Unit  = {}, failureListener: (er: Exception) -> Unit = {}) {
         HealthLogsDbHelper.getHealthLog(
             successListener = { result -> run {
                 var dataTemp = HealthLogsModel(SingletonFirebaseAuth.getInstance().getCurrentUser().email!!)
@@ -36,15 +37,17 @@ class HealthLogViewModel : ViewModel() {
                     HealthLogsDbHelper.postHealthLog(
                         dataTemp,
                         successListener = {
-
+                            successListener()
                         },
-                        failureListener = {}
+                        failureListener = failureListener
                     )
                 }
                 else {
 
                     val data = result.documents.first().data
                     dataTemp = HealthLogsModel.toHealthLog(data!!)
+
+                    successListener()
 
 
                 }
@@ -61,8 +64,8 @@ class HealthLogViewModel : ViewModel() {
         HealthLogsDbHelper.updateHealthLog(
             updatedHealthLog,
             successListener = {
-                setHealthLog(updatedHealthLog)
-                successListener()
+                fetchHealthLog(successListener = successListener
+                , failureListener = failureListener)
             },
             failureListener = failureListener
         )
