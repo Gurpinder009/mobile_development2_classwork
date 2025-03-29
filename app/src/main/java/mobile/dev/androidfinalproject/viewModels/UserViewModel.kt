@@ -24,7 +24,14 @@ class UserViewModel : ViewModel() {
         UserDbHelper.getUser(email, successListener = { result ->
             _user.value = UserModel.toUser(result)
         }, failureListener = { error ->
-            // Handle error
         })
     }
+
+
+//    fun updateUser(user: UserModel) {
+//        UserDbHelper.updateUser(user, successListener = { result ->
+//            _user.value = UserModel.toUser(result)
+//        }, failureListener = { error ->
+//        })
+//    }
 }

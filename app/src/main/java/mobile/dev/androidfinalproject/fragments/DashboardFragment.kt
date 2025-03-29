@@ -1,36 +1,31 @@
 package mobile.dev.androidfinalproject.fragments
 
 import android.annotation.SuppressLint
-import android.content.Intent
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.navigation.Navigation
-import mobile.dev.androidfinalproject.GetStartedActivity
-import mobile.dev.androidfinalproject.R
-
 import mobile.dev.androidfinalproject.databinding.FragmentDashboardBinding
-import mobile.dev.androidfinalproject.dbHelpers.HealthLogsDbHelper
-import mobile.dev.androidfinalproject.dbHelpers.UserDbHelper
 import mobile.dev.androidfinalproject.models.HealthLogsModel
 import mobile.dev.androidfinalproject.models.UserModel
 import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
-import kotlin.math.abs
-import kotlin.math.round
+import mobile.dev.androidfinalproject.viewModels.HealthLogViewModel
+import mobile.dev.androidfinalproject.viewModels.UserViewModel
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.ViewModelProvider
+
 import kotlin.math.roundToInt
 
 
 class DashboardFragment  constructor(
+
     private var _binding : FragmentDashboardBinding? = null,
     private var userDetails : UserModel? = null,
     private var healthLog: HealthLogsModel = HealthLogsModel(SingletonFirebaseAuth.getInstance().getCurrentUser().email!!)
 ) : Fragment() {
+
 
 
     override fun onCreateView(
@@ -56,47 +51,24 @@ class DashboardFragment  constructor(
 
 
     private fun initializeLogData(){
-        HealthLogsDbHelper.getHealthLog(
-            successListener = { result -> run {
-                if(result.documents.isEmpty()){
-                    HealthLogsDbHelper.postHealthLog(
-                        this.healthLog,
-                        successListener = {
-                            Toast.makeText(context,"New Entry Created",Toast.LENGTH_SHORT).show()
-                        },
-                        failureListener = {}
-                    )
-                }
-                else {
-
-                    val data = result.documents.first().data
-                    this.healthLog = HealthLogsModel.toHealthLog(data!!)
-                    Toast.makeText(context,"Data loaded successfully",Toast.LENGTH_SHORT).show()
+        val userViewModel= ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        val healthLogViewModel=ViewModelProvider(requireActivity())[HealthLogViewModel::class.java]
 
 
-                }
-                setUiValues()
-            } }, failureListener = { error -> run {} },
+        healthLogViewModel.getHealthLog().observe(requireActivity()) { result ->
+            healthLog = result
+            userViewModel.getUser().observe(requireActivity()) { data ->
+                this.userDetails = data
+                initializeData(data!!)
 
-        )
-    }
-
-
-
-
-    @SuppressLint("SetTextI18n")
-    private fun setUiValues(){
-
-        val email = SingletonFirebaseAuth.getEmail()
-        UserDbHelper.getUser(email, successListener = { result ->
-            userDetails = UserModel.toUser(result)
-            initializeData(userDetails!!)
-        }, failureListener = {
-
+            }
         }
-        )
+
 
     }
+
+
+
 
 
     @SuppressLint("SetTextI18n")
@@ -162,3 +134,43 @@ class DashboardFragment  constructor(
 
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        HealthLogsDbHelper.getHealthLog(
+//            successListener = { result -> run {
+//                if(result.documents.isEmpty()){
+//                    HealthLogsDbHelper.postHealthLog(
+//                        this.healthLog,
+//                        successListener = {
+//                            Toast.makeText(context,"New Entry Created",Toast.LENGTH_SHORT).show()
+//                        },
+//                        failureListener = {}
+//                    )
+//                }
+//                else {
+//
+//                    val data = result.documents.first().data
+//                    this.healthLog = HealthLogsModel.toHealthLog(data!!)
+//                    Toast.makeText(context,"Data loaded successfully",Toast.LENGTH_SHORT).show()
+//
+//
+//                }
+//                setUiValues()
+//            } }, failureListener = { error -> run {} },
+
+//        )

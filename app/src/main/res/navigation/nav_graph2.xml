@@ -42,5 +42,11 @@
         android:id="@+id/getDetailsFragment"
         android:name="mobile.dev.androidfinalproject.fragments.GetDetailsFragment"
         android:label="fragment_get_details"
-        tools:layout="@layout/fragment_get_details" />
+        tools:layout="@layout/fragment_get_details" >
+        <argument
+            android:name="userDetails"
+            app:argType="mobile.dev.androidfinalproject.models.UserModel"
+            app:nullable="true"
+            android:defaultValue="@null" />
+    </fragment>
 </navigation>

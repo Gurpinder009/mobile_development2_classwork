@@ -6,18 +6,25 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import mobile.dev.androidfinalproject.R
 import mobile.dev.androidfinalproject.databinding.FragmentUpdateDetailsBinding
 import mobile.dev.androidfinalproject.dbHelpers.HealthLogsDbHelper
 import mobile.dev.androidfinalproject.models.HealthLogsModel
+import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
+import mobile.dev.androidfinalproject.viewModels.HealthLogViewModel
 import java.time.LocalDate
 
 
 class UpdateDetails(
     private var binding:FragmentUpdateDetailsBinding?= null,
+
 ) : Fragment() {
+
+        private var healthLogViewModel:HealthLogViewModel? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,15 +37,22 @@ class UpdateDetails(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val args: UpdateDetailsArgs by navArgs()
-        val healthLog = args.healthLogsModel
-        initializeValues(healthLog)
+       this.healthLogViewModel = ViewModelProvider(requireActivity())[HealthLogViewModel::class.java]
+
+
+
+        this.healthLogViewModel?.getHealthLog()?.observe(requireActivity()) { result ->
+            initializeValues(result)
+        }
+
+
         this.binding?.updateDetailsSavingBtn?.setOnClickListener(this::handleUpdate)
     }
 
 
 
     private fun initializeValues(healthLog: HealthLogsModel){
+
         binding?.caloriesInputEditView?.setText(healthLog.caloriesConsumed.toString())
         binding?.sleepInputEditText?.setText(healthLog.sleepDuration.toString())
         binding?.waterInputEditText?.setText(healthLog.waterIntake.toString())
@@ -46,10 +60,6 @@ class UpdateDetails(
 
 
     }
-
-
-
-
 
 
    fun handleUpdate(view:View) {
@@ -62,17 +72,18 @@ class UpdateDetails(
 
 
 
-
-        val updatedHealthLog = HealthLogsModel(0L,calories,sleep,water,exercise,"singh@gmail.com",LocalDate.now().toString())
-       HealthLogsDbHelper.updateHealthLog(
-            updatedHealthLog,
+    val email= SingletonFirebaseAuth.getEmail()
+        val updatedHealthLog = HealthLogsModel(0L,calories,sleep,water,exercise,email,LocalDate.now().toString())
+        healthLogViewModel?.updateHealthLog(updatedHealthLog,
             successListener = {
+                Toast.makeText(requireContext(), "Updated Successfully", Toast.LENGTH_SHORT).show()
                 Navigation.findNavController(view).popBackStack()
             },
-            failureListener = { error:Exception ->
-                Toast.makeText(context, "Update failed: ${error.message}", Toast.LENGTH_SHORT).show()
+            failureListener = { error ->
+                Toast.makeText(requireContext(), "Failed to update: ${error.message}", Toast.LENGTH_SHORT).show()
             }
         )
+
     }
 
 

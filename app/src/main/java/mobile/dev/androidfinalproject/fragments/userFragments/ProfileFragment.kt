@@ -6,14 +6,11 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import com.google.firebase.auth.FirebaseUser
-import mobile.dev.androidfinalproject.R
 import mobile.dev.androidfinalproject.databinding.FragmentProfileBinding
-import mobile.dev.androidfinalproject.dbHelpers.SingletonFirebaseDb
-import mobile.dev.androidfinalproject.dbHelpers.UserDbHelper
 import mobile.dev.androidfinalproject.models.UserModel
-import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
+import mobile.dev.androidfinalproject.viewModels.UserViewModel
 
 class ProfileFragment(
     private var _binding:FragmentProfileBinding?=null,
@@ -30,14 +27,18 @@ class ProfileFragment(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val email = SingletonFirebaseAuth.getEmail()
-        UserDbHelper.getUser(email, successListener = { result ->
-                userDetails = UserModel.toUser(result)
-                initializeData(userDetails!!)
-        }, failureListener = {
 
-            }
-        )
+
+
+
+
+        val userViewModel = ViewModelProvider(requireActivity())[UserViewModel::class.java]
+        userViewModel.getUser().observe(requireActivity()){ data->
+            this.userDetails = data
+            initializeData(userDetails!!)
+        }
+
+
         _binding?.profileUpdateButton?.setOnClickListener(this::handleProfileUpdate)
     }
 

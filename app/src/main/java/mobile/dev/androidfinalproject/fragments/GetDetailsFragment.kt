@@ -30,18 +30,17 @@ class GetDetailsFragment(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding?.moreDetailsSaveBtn?.setOnClickListener(this::handleSave)
+
         val args: GetDetailsFragmentArgs by navArgs()
-        val user = args.userDetails
-        initialize(user)
-
-
+        val user:UserModel? = args.userDetails
+        if(user!= null) {
+            initialize(user)
+        }
 
 
     }
 
-
-
-    private fun initialize(user:UserModel){
+        private fun initialize(user:UserModel){
         _binding?.heightEditText?.setText(user.height.toString())
         _binding?.weightEditText?.setText(user.weight.toString())
         _binding?.targetCaloriesEditText?.setText(user.targetCalories.toString())
