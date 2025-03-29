@@ -38,6 +38,8 @@ class GetStartedFragment(
             Navigation.findNavController(view).navigate(R.id.action_getStartedFragment_to_signUpFragment2)
     }
 
+
+
     override fun onDestroy() {
         super.onDestroy()
         _binding = null
