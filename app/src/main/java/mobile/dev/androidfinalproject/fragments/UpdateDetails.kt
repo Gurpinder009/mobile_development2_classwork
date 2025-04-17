@@ -8,10 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.fragment.navArgs
 import mobile.dev.androidfinalproject.R
 import mobile.dev.androidfinalproject.databinding.FragmentUpdateDetailsBinding
-import mobile.dev.androidfinalproject.dbHelpers.HealthLogsDbHelper
 import mobile.dev.androidfinalproject.models.HealthLogsModel
 import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
 import mobile.dev.androidfinalproject.viewModels.HealthLogViewModel
@@ -38,9 +36,6 @@ class UpdateDetails(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
        this.healthLogViewModel = ViewModelProvider(requireActivity())[HealthLogViewModel::class.java]
-
-
-
         this.healthLogViewModel?.getHealthLog()?.observe(requireActivity()) { result ->
             initializeValues(result)
         }
@@ -52,7 +47,6 @@ class UpdateDetails(
 
 
     private fun initializeValues(healthLog: HealthLogsModel){
-
         binding?.caloriesInputEditView?.setText(healthLog.caloriesConsumed.toString())
         binding?.sleepInputEditText?.setText(healthLog.sleepDuration.toString())
         binding?.waterInputEditText?.setText(healthLog.waterIntake.toString())

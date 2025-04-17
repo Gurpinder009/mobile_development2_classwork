@@ -40,7 +40,6 @@ class LoginInFragment
 
     fun handleLoginToSignUp(view:View){
         val navController = Navigation.findNavController(view)
-        navController.popBackStack()
         navController.navigate(R.id.action_loginInFragment2_to_signUpFragment2)
     }
 

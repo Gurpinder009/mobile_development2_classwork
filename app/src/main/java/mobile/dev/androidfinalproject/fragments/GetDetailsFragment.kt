@@ -3,15 +3,18 @@ package mobile.dev.androidfinalproject.fragments
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.navigation.Navigation
 import androidx.navigation.fragment.navArgs
 import mobile.dev.androidfinalproject.MainActivity
 import mobile.dev.androidfinalproject.databinding.FragmentGetDetailsBinding
 import mobile.dev.androidfinalproject.dbHelpers.UserDbHelper
+import mobile.dev.androidfinalproject.fragments.userFragments.ProfileFragmentDirections
 import mobile.dev.androidfinalproject.models.UserModel
 import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
 
@@ -31,11 +34,14 @@ class GetDetailsFragment(
         super.onViewCreated(view, savedInstanceState)
         _binding?.moreDetailsSaveBtn?.setOnClickListener(this::handleSave)
 
+
+
+
         val args = GetDetailsFragmentArgs.fromBundle(arguments?: Bundle())
         val user:UserModel? = args.userDetails
-        if(user!= null) {
-            initialize(user)
-        }
+        if(user?.targetCalories != 0.0)
+            initialize(user!!)
+
 
 
     }

@@ -2,7 +2,7 @@
 <resources>
 
     <color name="primary">#E8145390</color>
-    <color name="primary_dark">#B73A8CDE</color>
+    <color name="primary_dark">#E8145390</color>
     <color name="color_on_primary">#ffffff</color>
     <color name="color_on_primary_dark">#ffffff</color>
 
@@ -22,4 +22,12 @@
     <color name="popup_background">#FFFCFE</color>
     <color name="popup_background_dark">#4D4D4D</color>
 
+
+
+
+
+    <color name="red">#ffff0000</color>
+    <color name="green">#ff00ff00</color>
+    <color name="blue">#ff0000ff</color>
+    <color name="yellow">#ffffff00</color>
 </resources>

@@ -5,6 +5,9 @@
     <string name="editTextEmailHelper">example@gmail.com</string>
     <string name="emailInputHelperText">example@abc.com</string>
     <string name="passwordInputHelperText">password</string>
+    <string name="confirmPasswordInputHelperText">Confirm Password</string>
+
+
     <string name="loginPageTitleText">Login</string>
     <string name="loginPageSignUpPageText">new user? register</string>
     <string name="loginPageBtnText">login</string>
@@ -35,5 +38,6 @@
     <string name="profile_page_detail_value">Value</string>
     <string name="healthy_range_21_0_to_26_5">healthy range (21.0 to 26.5)</string>
     <string name="emailInputLayoutHelperText">Email Address</string>
+    <string name="update_information">Update Information</string>
 
 </resources>

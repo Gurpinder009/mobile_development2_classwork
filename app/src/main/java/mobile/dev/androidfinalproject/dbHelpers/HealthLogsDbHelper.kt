@@ -31,6 +31,17 @@ class HealthLogsDbHelper {
                 .addOnFailureListener (failureListener)
         }
 
+
+        // getting data by using date
+        fun getHealthLogByDate(date:String,successListener:(result: QuerySnapshot)->Unit, failureListener:(exception:Exception)->Unit){
+            val email = SingletonFirebaseAuth.getInstance().getCurrentUser().email
+            val db = SingletonFirebaseDb.getInstance().getFirestoreDb()
+            db.collection(COLLECTION_NAME).whereEqualTo("userId",email).whereEqualTo("createdAt",
+                date).get()
+                .addOnSuccessListener(successListener)
+                .addOnFailureListener (failureListener)
+        }
+
         //for saving a document in a collection
         fun postHealthLog(healthLog: HealthLogsModel, successListener:(ref: DocumentReference)->Unit, failureListener:(exception:Exception)->Unit){
             val db = SingletonFirebaseDb.getInstance().getFirestoreDb()

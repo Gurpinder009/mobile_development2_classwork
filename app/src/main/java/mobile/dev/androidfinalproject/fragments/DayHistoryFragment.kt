@@ -2,71 +2,57 @@ package mobile.dev.androidfinalproject.fragments
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.navigation.Navigation
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.NavArgs
+import androidx.navigation.fragment.navArgs
+import mobile.dev.androidfinalproject.R
 import mobile.dev.androidfinalproject.databinding.FragmentDashboardBinding
+import mobile.dev.androidfinalproject.databinding.FragmentDayHistoryBinding
 import mobile.dev.androidfinalproject.models.HealthLogsModel
 import mobile.dev.androidfinalproject.models.UserModel
 import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
 import mobile.dev.androidfinalproject.viewModels.HealthLogViewModel
 import mobile.dev.androidfinalproject.viewModels.UserViewModel
-import androidx.lifecycle.ViewModelProvider
-import mobile.dev.androidfinalproject.R
-
 import kotlin.math.roundToInt
 
-
-class DashboardFragment  constructor(
-
-    private var _binding : FragmentDashboardBinding? = null,
+class DayHistoryFragment(
     private var userDetails : UserModel? = null,
-    private var healthLog: HealthLogsModel = HealthLogsModel(SingletonFirebaseAuth.getInstance().getCurrentUser().email!!)
-) : Fragment() {
+    private var healthLog: HealthLogsModel = HealthLogsModel(SingletonFirebaseAuth.getInstance().getCurrentUser().email!!) ,
+    private var _binding : FragmentDayHistoryBinding? = null,
 
-
+    ) : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDashboardBinding.inflate(inflater,container,false);
+        _binding = FragmentDayHistoryBinding.inflate(inflater,container,false);
         return _binding?.root;
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initializeLogData()
-        _binding?.updateDetailsBtn?.setOnClickListener(this::updateDetails)
-
-    }
-
-    fun updateDetails(view:View){
-
-        Navigation.findNavController(view).navigate(R.id.action_dashboardFragment_to_updateDetails)
-    }
 
 
 
-    private fun initializeLogData(){
         val userViewModel= ViewModelProvider(requireActivity())[UserViewModel::class.java]
-        val healthLogViewModel=ViewModelProvider(requireActivity())[HealthLogViewModel::class.java]
 
 
-        healthLogViewModel.getHealthLog().observe(requireActivity()) { result ->
-            healthLog = result
-            userViewModel.getUser().observe(requireActivity()) { data ->
-                this.userDetails = data
-                initializeData(data!!)
 
-            }
+        val args : DayHistoryFragmentArgs by navArgs()
+        this.healthLog = args.healthLog
+
+        userViewModel.getUser().observe(requireActivity()) { data ->
+            this.userDetails = data
+            initializeData(data!!)
         }
 
 
     }
-
 
 
 
@@ -87,32 +73,9 @@ class DashboardFragment  constructor(
         _binding!!.sleepDuration.text = "${(healthLog.sleepDuration?:0.0)} / ${userDetails.targetSleepHours} hours";
         _binding?.waterPercentage?.text = "${waterIntake}%"
         _binding!!.waterIntake.text = "${(healthLog.waterIntake?:0.0)} / ${userDetails.targetWaterIntake} ml";
-          _binding?.exerciseTimePercentage?.text = "${exerciseTime}%"
+        _binding?.exerciseTimePercentage?.text = "${exerciseTime}%"
         _binding!!.exerciseTime.text = "${(healthLog.exerciseTime?:0.0)} / ${userDetails.targetExerciseTime} hours"
-        val bmi = calculateBMI(userDetails.weight?:0.0,userDetails.height?:0.0)
-        _binding?.bmiValue?.text = bmi
-        when(bmi){
-            in "0.0".."18.4" -> {
-                _binding?.bmiStatus?.text = "Underweight"
-                _binding?.bmiStatus?.setTextColor(resources.getColor(R.color.red))
-            }
-            in "18.5".."24.9" -> {
-                _binding?.bmiStatus?.text = "Normal weight"
-                _binding?.bmiStatus?.setTextColor(resources.getColor(R.color.green))
-            }
-            in "25.0".."29.9" -> {
-                _binding?.bmiStatus?.text = "Overweight"
-                _binding?.bmiStatus?.setTextColor(resources.getColor(R.color.yellow))
-            }
-            else -> {
-                _binding?.bmiStatus?.text = "Obesity"
-                _binding?.bmiStatus?.setTextColor(resources.getColor(R.color.red))
-            }
-        }
-
-
-
-
+        _binding?.bmiValue?.text = calculateBMI(userDetails.weight?:0.0,userDetails.height?:0.0)
 
 
 
@@ -121,6 +84,9 @@ class DashboardFragment  constructor(
 
 
     }
+
+
+
 
 
 
@@ -140,11 +106,6 @@ class DashboardFragment  constructor(
 
     private fun calPercentage(value:Double,total:Double): String {
         val result = ((value / total) * 100)
-        if(total == 0.0){
-            return 0.toString();
-        }
-
-
         if(result > 100){
             return "100"
         }
@@ -162,19 +123,4 @@ class DashboardFragment  constructor(
         _binding = null
     }
 
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

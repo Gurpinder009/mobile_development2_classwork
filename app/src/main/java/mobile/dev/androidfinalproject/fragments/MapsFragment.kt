@@ -101,7 +101,7 @@ class MapsFragment : Fragment() {
             { response -> addMarkers(response) },
             { error ->
                 logError("Error fetching data: ${error.message}")
-                showToast("Error fetching data")
+                showToast("Error fetching data234")
             }
         ) {
             override fun getHeaders(): MutableMap<String, String> {

@@ -22,13 +22,13 @@ data class UserModel(
 
 
     constructor(firstName: String?,lastName: String?,email: String) : this(firstName,lastName,
-        emailAddress = email, null,null,
-        LocalDateTime.now().toString(),null,null,null,null,null)
+        emailAddress = email, 0.0,0.0,
+        LocalDateTime.now().toString(),null,0.0,0.0,0.0,0.0)
 
 
 
-    constructor(email:String):this(null,null, emailAddress = email,null,null,
-        LocalDateTime.now().toString(),null,null,null,null,null)
+    constructor(email:String):this("","", emailAddress = email,0.0,0.0,
+        LocalDateTime.now().toString(),null,0.0,0.0,0.0,0.0)
 
 
 

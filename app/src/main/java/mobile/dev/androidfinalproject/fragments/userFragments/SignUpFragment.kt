@@ -88,9 +88,10 @@ class SignUpFragment (
                             Toast.makeText(context, "Successfully Signed Up", Toast.LENGTH_SHORT)
                                 .show()
 
-                                val navController = Navigation.findNavController(view)
 
-                                navController.navigate(R.id.action_signUpFragment2_to_getDetailsFragment)
+                                val action = SignUpFragmentDirections.actionSignUpFragment2ToGetDetailsFragment(user)
+                                Navigation.findNavController(view).navigate(action)
+
 
                         }
                         },

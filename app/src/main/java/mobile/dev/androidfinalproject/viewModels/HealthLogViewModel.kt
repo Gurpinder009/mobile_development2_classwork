@@ -1,13 +1,10 @@
 package mobile.dev.androidfinalproject.viewModels
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.navigation.Navigation
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.firebase.firestore.DocumentReference
+
 import mobile.dev.androidfinalproject.dbHelpers.HealthLogsDbHelper
 import mobile.dev.androidfinalproject.models.HealthLogsModel
 import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth

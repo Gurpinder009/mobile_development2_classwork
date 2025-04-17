@@ -393,6 +393,7 @@
                           android:text="BMI"
                           android:textSize="@dimen/dashboard_card_heading" />
                       <TextView
+                          android:id="@+id/bmiStatus"
                           android:layout_width="wrap_content"
                           android:layout_height="wrap_content"
                           android:layout_weight="1"

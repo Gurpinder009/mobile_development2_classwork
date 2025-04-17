@@ -13,7 +13,10 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.navigation.NavController
+import androidx.navigation.Navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import mobile.dev.androidfinalproject.databinding.ActivityMainBinding
 import mobile.dev.androidfinalproject.utilities.SingletonFirebaseAuth
@@ -38,15 +41,33 @@ class MainActivity : AppCompatActivity() {
         val toolbar: androidx.appcompat.widget.Toolbar = _binding.toolbar
         setSupportActionBar(toolbar)
 
+
+
         val email = SingletonFirebaseAuth.getEmail()
         userViewModel.fetchUser(email)
         healthLogViewModel.fetchHealthLog()
 
 
+
         val navHostFragment = supportFragmentManager.findFragmentById(_binding.fragmentContainerView2.id) as NavHostFragment
         _navController = navHostFragment.navController
-
         _binding.bottomNavBar.setupWithNavController(_navController)
+
+
+
+
+        val appBarConfiguration = AppBarConfiguration(setOf(
+            R.id.dashboardFragment,
+            R.id.mapsFragment,
+            R.id.healthLogReportFragment,
+            R.id.profileFragment
+        ))
+        setupActionBarWithNavController(this, _navController, appBarConfiguration)
+
+
+
+
+
 
         val windowInsetsController = WindowInsetsControllerCompat(window, window.decorView)
         windowInsetsController.isAppearanceLightStatusBars = false
@@ -57,10 +78,6 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
-
-
-
-
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -80,4 +97,9 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.toolbar_menu, menu)
         return true
     }
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressedDispatcher.onBackPressed()
+        return true
+    }
+
 }

@@ -67,7 +67,7 @@ class ProfileFragment(
         _binding?.profileDetailTargetCalories?.profilePageLabelTextView?.text = "Target Calories: "
         _binding?.profileDetailTargetSleepCalories?.profilePageLabelTextView?.text = "Target Sleep Hours: "
         _binding?.profileDetailTargetExerciseTime?.profilePageLabelTextView?.text = "Target Exercise Time:"
-        _binding?.profileDetailTargetWaterIntake?.profilePageLabelTextView?.text = "Water Intake: "
+        _binding?.profileDetailTargetWaterIntake?.profilePageLabelTextView?.text = " Target Water Intake: "
     }
 
 

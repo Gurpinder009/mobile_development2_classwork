@@ -9,29 +9,29 @@
             android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
+                android:layout_height="166dp"
                 android:contentDescription="@string/content_description"
                 android:scaleType="fitCenter"
                 android:src="@drawable/baseline_person_24_grey" />
-            <include android:id="@+id/profileDetailName" layout="@layout/profile_detail_layout"/>
-            <include android:id="@+id/profileDetailEmail" layout="@layout/profile_detail_layout"/>
-            <include android:id="@+id/profileDetailHeight" layout="@layout/profile_detail_layout"/>
-            <include android:id="@+id/profileDetailWeight" layout="@layout/profile_detail_layout"/>
-            <include android:id="@+id/profileDetailTargetCalories" layout="@layout/profile_detail_layout"/>
-            <include android:id="@+id/profileDetailTargetSleepCalories" layout="@layout/profile_detail_layout"/>
-            <include android:id="@+id/profileDetailTargetExerciseTime" layout="@layout/profile_detail_layout"/>
-            <include android:id="@+id/profileDetailTargetWaterIntake" layout="@layout/profile_detail_layout"/>
+                <include android:id="@+id/profileDetailName" layout="@layout/profile_detail_layout"/>
+                <include android:id="@+id/profileDetailEmail" layout="@layout/profile_detail_layout"/>
+                <include android:id="@+id/profileDetailHeight" layout="@layout/profile_detail_layout"/>
+                <include android:id="@+id/profileDetailWeight" layout="@layout/profile_detail_layout"/>
+                <include android:id="@+id/profileDetailTargetCalories" layout="@layout/profile_detail_layout"/>
+                <include android:id="@+id/profileDetailTargetSleepCalories" layout="@layout/profile_detail_layout"/>
+                <include android:id="@+id/profileDetailTargetExerciseTime" layout="@layout/profile_detail_layout"/>
+                <include android:id="@+id/profileDetailTargetWaterIntake" layout="@layout/profile_detail_layout"/>
             <Button
                 android:id="@+id/profileUpdateButton"
 
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/button_design"
-                android:text="Update Information"
+                android:text="@string/update_information"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>
